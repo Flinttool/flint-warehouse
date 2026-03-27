@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Free HVAC Assessment Calculator — Flint</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --brand-primary: #E89420;
+    --brand-primary-light: #F5A832;
+    --brand-accent: #E89420;
+    --brand-dark: #212123;
+    --brand-text: #383839;
+    --ash: #999A9E;
+    --smoke: #F4F4F4;
+    --white: #FFFFFF;
+    --green: #27AE60;
+    --red: #C0392B;
+    --yellow: #F39C12;
+    --orange: #E89420;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Barlow", sans-serif; background: var(--smoke); color: var(--brand-text); min-height: 100vh; }
+
+  .topbar { background: var(--brand-dark); padding: 0 32px; height: 60px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.3); }
+  .brand-name { font-family: "Barlow Condensed", sans-serif; font-weight: 900; font-size: 22px; letter-spacing: 2px; color: var(--white); text-transform: uppercase; }
+  .brand-name span { color: var(--brand-accent); }
+  .topbar-phone { font-size: 13px; font-weight: 700; color: var(--brand-accent); text-decoration: none; letter-spacing: 0.5px; }
+  .topbar-phone:hover { color: var(--white); }
+
+  .hero { background: var(--brand-dark); padding: 48px 24px 52px; text-align: center; position: relative; overflow: hidden; }
+  .hero::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: var(--brand-primary); }
+  .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--brand-accent); margin-bottom: 16px; }
+  .hero-eyebrow::before { content: ""; width: 6px; height: 6px; background: var(--brand-accent); border-radius: 50%; }
+  .hero h1 { font-family: "Barlow Condensed", sans-serif; font-weight: 900; font-size: clamp(26px, 6vw, 50px); text-transform: uppercase; color: var(--white); line-height: 1.05; margin-bottom: 14px; }
+  .hero h1 em { font-style: normal; color: var(--brand-accent); }
+  .hero p { font-size: 15px; color: #999a9e; max-width: 500px; margin: 0 auto; line-height: 1.65; }
+
+  .trust-bar { background: var(--white); border-bottom: 1px solid #e8e8e8; padding: 12px 24px; display: flex; justify-content: center; gap: 28px; flex-wrap: wrap; }
+  .trust-item { display: flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 700; color: var(--ash); }
+
+  .main { max-width: 660px; margin: 0 auto; padding: 32px 20px 80px; }
+
+  /* OPERATING STATUS */
+  .status-banner { border-radius: 10px; padding: 22px 24px; margin-bottom: 18px; display: flex; align-items: center; justify-content: space-between; gap: 20px; border: 2px solid #e0e0e0; background: var(--white); box-shadow: 0 2px 16px rgba(0,0,0,0.06); transition: all 0.2s; }
+  .status-banner.status-no { border-color: rgba(192,57,43,0.45); background: #fff8f7; }
+  .status-left { display: flex; align-items: center; gap: 14px; }
+  .status-icon { font-size: 28px; flex-shrink: 0; }
+  .status-label { font-size: 14px; font-weight: 700; color: var(--brand-text); line-height: 1.4; }
+  .status-label small { display: block; font-size: 11px; font-weight: 400; color: var(--ash); margin-top: 3px; font-style: italic; }
+  .status-toggle { display: flex; border-radius: 6px; overflow: hidden; border: 2px solid #e0e0e0; flex-shrink: 0; }
+  .status-btn { padding: 10px 22px; font-family: "Barlow", sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; border: none; background: var(--smoke); color: var(--ash); transition: all 0.15s; letter-spacing: 0.5px; }
+  .status-btn.active-yes { background: var(--green); color: var(--white); }
+  .status-btn.active-no  { background: var(--red);   color: var(--white); }
+
+  .card { background: var(--white); border-radius: 10px; padding: 28px; box-shadow: 0 2px 16px rgba(0,0,0,0.06); margin-bottom: 18px; }
+  .card-title { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--brand-primary); margin-bottom: 22px; padding-bottom: 10px; border-bottom: 2px solid var(--smoke); }
+
+  .field { margin-bottom: 20px; }
+  .field:last-child { margin-bottom: 0; }
+  .field label { display: flex; justify-content: space-between; align-items: flex-end; font-size: 13px; font-weight: 700; color: var(--brand-text); margin-bottom: 7px; }
+  .field label small { font-weight: 400; font-size: 11px; color: var(--ash); font-style: italic; }
+  .helper { font-size: 11px; color: var(--ash); font-style: italic; margin-top: 5px; line-height: 1.5; }
+
+  select, input[type="number"] { width: 100%; background: var(--smoke); border: 2px solid transparent; border-radius: 6px; color: var(--brand-text); font-family: "Barlow", sans-serif; font-size: 16px; font-weight: 700; padding: 13px 16px; outline: none; transition: border-color 0.2s, background 0.2s, box-shadow 0.2s; appearance: none; -moz-appearance: textfield; }
+  input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
+  select:focus, input:focus { border-color: var(--brand-primary); background: #fffaf3; box-shadow: 0 0 0 4px rgba(232,148,32,0.12); }
+  input.error { border-color: var(--red); background: #fff8f8; }
+
+  .input-wrap { display: flex; align-items: stretch; }
+  .prefix { display: flex; align-items: center; padding: 0 13px; background: #e8e8e8; border: 2px solid #e0e0e0; border-right: none; border-radius: 6px 0 0 6px; font-size: 15px; font-weight: 700; color: var(--brand-text); pointer-events: none; flex-shrink: 0; }
+  .suffix { display: flex; align-items: center; padding: 0 13px; background: #e8e8e8; border: 2px solid #e0e0e0; border-left: none; border-radius: 0 6px 6px 0; font-size: 13px; font-weight: 600; color: var(--ash); pointer-events: none; flex-shrink: 0; }
+  .has-prefix input { border-radius: 0 6px 6px 0 !important; }
+  .has-suffix input { border-radius: 6px 0 0 6px !important; }
+
+  .slider-wrap { display: flex; align-items: center; gap: 14px; }
+  input[type="range"] { -webkit-appearance: none; flex: 1; height: 5px; background: var(--smoke); border-radius: 3px; outline: none; border: none; padding: 0; cursor: pointer; }
+  input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%; background: var(--brand-primary); cursor: pointer; box-shadow: 0 2px 6px rgba(232,148,32,0.4); }
+  .slider-pill { background: var(--brand-text); color: var(--white); font-weight: 900; font-family: "Barlow Condensed", sans-serif; font-size: 18px; padding: 7px 14px; border-radius: 5px; min-width: 52px; text-align: center; }
+
+  .age-visual { display: flex; gap: 5px; margin-top: 10px; flex-wrap: wrap; }
+  .age-dot { width: 26px; height: 26px; border-radius: 4px; background: var(--smoke); border: 2px solid #e0e0e0; display: flex; align-items: center; justify-content: center; font-size: 8px; font-weight: 700; color: #ccc; }
+  .age-dot.filled  { background: var(--brand-primary); border-color: var(--brand-primary); color: var(--white); }
+  .age-dot.warning { background: var(--yellow); border-color: var(--yellow); color: var(--white); }
+  .age-dot.danger  { background: var(--red); border-color: var(--red); color: var(--white); }
+
+  .signal-row { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border-radius: 8px; background: var(--smoke); margin-bottom: 10px; gap: 16px; }
+  .signal-row:last-child { margin-bottom: 0; }
+  .signal-label { font-size: 13px; font-weight: 600; color: var(--brand-text); flex: 1; line-height: 1.4; }
+  .signal-label small { display: block; font-weight: 400; font-size: 11px; color: var(--ash); margin-top: 2px; font-style: italic; }
+  .toggle-group { display: flex; border-radius: 5px; overflow: hidden; border: 2px solid #e0e0e0; flex-shrink: 0; }
+  .toggle-btn { padding: 7px 18px; font-family: "Barlow", sans-serif; font-size: 12px; font-weight: 700; cursor: pointer; border: none; background: var(--white); color: var(--ash); transition: all 0.15s; letter-spacing: 0.5px; }
+  .toggle-btn.active-yes { background: var(--red);   color: var(--white); }
+  .toggle-btn.active-no  { background: var(--green); color: var(--white); }
+
+  .calc-btn { width: 100%; padding: 18px; background: var(--brand-primary); color: var(--white); font-family: "Barlow Condensed", sans-serif; font-weight: 900; font-size: 19px; letter-spacing: 3px; text-transform: uppercase; border: none; border-radius: 7px; cursor: pointer; transition: background 0.18s, transform 0.1s, box-shadow 0.2s; }
+  .calc-btn:hover { background: var(--brand-primary-light); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(232,148,32,0.35); }
+
+  .results { display: none; }
+  .results.visible { display: block; animation: fadeUp 0.4s ease both; }
+
+  .verdict-banner { border-radius: 10px; padding: 28px; margin-bottom: 14px; text-align: center; }
+  .verdict-banner.replace { background: linear-gradient(135deg, #fdf3f2, #fff8f7); border: 2px solid rgba(192,57,43,0.2); }
+  .verdict-banner.caution { background: linear-gradient(135deg, #fef9f0, #fffdf8); border: 2px solid rgba(243,156,18,0.25); }
+  .verdict-banner.good    { background: linear-gradient(135deg, #f0faf4, #f8fdf9); border: 2px solid rgba(39,174,96,0.2); }
+  .verdict-icon  { font-size: 40px; margin-bottom: 8px; }
+  .verdict-label { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--ash); margin-bottom: 8px; }
+  .verdict-title { font-family: "Barlow Condensed", sans-serif; font-weight: 900; font-size: clamp(24px, 5vw, 36px); text-transform: uppercase; margin-bottom: 10px; line-height: 1.1; }
+  .verdict-banner.replace .verdict-title { color: var(--red); }
+  .verdict-banner.caution .verdict-title { color: var(--yellow); }
+  .verdict-banner.good    .verdict-title { color: var(--green); }
+  .verdict-desc { font-size: 14px; color: var(--ash); line-height: 1.65; max-width: 460px; margin: 0 auto; }
+  .verdict-desc strong { color: var(--brand-text); }
+
+  /* MAINTENANCE TIPS — healthy verdict only */
+  .tips-card { background: #f0faf4; border-radius: 10px; padding: 22px 24px; margin-bottom: 14px; display: none; }
+  .tips-card.visible { display: block; }
+  .tips-title { font-family: "Barlow Condensed", sans-serif; font-weight: 900; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: var(--brand-primary); margin-bottom: 16px; }
+  .tip-row { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 14px; }
+  .tip-row:last-child { margin-bottom: 0; }
+  .tip-icon { color: var(--brand-primary); font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .tip-text { font-size: 14px; color: var(--brand-text); font-style: italic; line-height: 1.65; }
+
+  /* Secondary Calendly link for healthy verdict */
+  .secondary-link { text-align: center; margin-top: 16px; font-size: 12px; color: var(--ash); }
+  .secondary-link a { color: var(--ash); text-decoration: underline; }
+  .secondary-link a:hover { color: var(--brand-text); }
+
+  .output-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+  @media (max-width: 540px) { .output-grid { grid-template-columns: 1fr; } }
+  .output-card { background: var(--white); border-radius: 8px; padding: 18px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); text-align: center; border-top: 4px solid var(--brand-primary); }
+  .output-card.green-top { border-top-color: var(--green); }
+  .output-card.red-top   { border-top-color: var(--red); }
+  .output-icon  { font-size: 22px; margin-bottom: 6px; }
+  .output-label { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--ash); margin-bottom: 6px; line-height: 1.4; }
+  .output-value { font-family: "Barlow Condensed", sans-serif; font-weight: 900; font-size: 26px; color: var(--brand-text); line-height: 1; margin-bottom: 3px; }
+  .output-value.blue  { color: var(--brand-primary); }
+  .output-value.green { color: var(--green); }
+  .output-value.red   { color: var(--red); }
+  .output-sub { font-size: 11px; color: var(--ash); line-height: 1.4; }
+
+  .how-we-calc { background: var(--white); border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 14px; overflow: hidden; }
+  .how-we-calc-toggle { width: 100%; padding: 15px 20px; background: none; border: none; font-family: "Barlow", sans-serif; font-size: 13px; font-weight: 700; color: var(--ash); cursor: pointer; display: flex; justify-content: space-between; align-items: center; text-align: left; }
+  .how-we-calc-toggle:hover { color: var(--brand-primary); }
+  .how-we-calc-toggle span { font-size: 11px; }
+  .how-we-calc-body { display: none; padding: 0 20px 20px; border-top: 1px solid var(--smoke); }
+  .how-we-calc-body.open { display: block; animation: fadeUp 0.25s ease both; }
+  .calc-step { margin-top: 16px; }
+  .calc-step-title { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--brand-text); margin-bottom: 6px; }
+  .calc-step-text { font-size: 12px; color: var(--ash); line-height: 1.7; }
+  .calc-step-text strong { color: var(--brand-text); }
+  .calc-step-label { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 2px 8px; border-radius: 3px; margin-bottom: 5px; }
+  .calc-step-label.cited    { background: #e8f4fd; color: #1a6fa8; }
+  .calc-step-label.standard { background: #fdf3e3; color: #9c6000; }
+  .calc-step-label.estimate { background: #f0faf4; color: #1e7e3e; }
+  .calc-step-label.regional { background: #f3f0fd; color: #5a3fa8; }
+  .calc-step-formula { background: var(--smoke); border-radius: 4px; padding: 8px 12px; font-size: 12px; font-family: monospace; color: var(--brand-text); margin-top: 6px; line-height: 1.6; }
+  .sources { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--smoke); font-size: 11px; color: var(--ash); font-style: italic; line-height: 1.7; }
+
+  .breakdown-card { background: var(--white); border-radius: 8px; padding: 22px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 14px; }
+  .breakdown-title { font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--brand-text); margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid var(--smoke); }
+  .b-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-size: 13px; gap: 12px; }
+  .b-row:last-child { border-bottom: none; }
+  .b-label { color: var(--ash); line-height: 1.4; flex: 1; }
+  .b-val { font-weight: 700; color: var(--brand-text); white-space: nowrap; }
+  .b-val.blue   { color: var(--brand-primary); }
+  .b-val.green  { color: var(--green); }
+  .b-val.red    { color: var(--red); }
+  .b-val.yellow { color: var(--yellow); }
+  .b-row.total { border-top: 2px solid var(--brand-text); border-bottom: none; margin-top: 6px; padding-top: 12px; font-size: 14px; font-weight: 700; }
+  .b-row.total .b-label { color: var(--brand-text); font-weight: 700; }
+  .b-row.signal-warn .b-label { color: var(--red); font-weight: 600; }
+  .b-row.signal-warn .b-val  { color: var(--red); }
+
+  .rule-box { background: var(--brand-dark); border-radius: 8px; padding: 20px 22px; margin-bottom: 14px; display: flex; gap: 14px; align-items: flex-start; }
+  .rule-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+  .rule-title { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--brand-accent); margin-bottom: 5px; }
+  .rule-text { font-size: 13px; color: #999a9e; line-height: 1.6; }
+  .rule-text strong { color: var(--white); }
+
+  .disclaimer { background: #fffdf8; border-left: 4px solid var(--yellow); padding: 14px 18px; border-radius: 0 6px 6px 0; font-size: 11px; color: var(--ash); line-height: 1.6; margin-bottom: 14px; }
+  .disclaimer strong { color: var(--brand-text); }
+
+  .cta-card { background: var(--brand-primary); border-radius: 10px; padding: 32px 24px; text-align: center; }
+  .cta-card h3 { font-family: "Barlow Condensed", sans-serif; font-weight: 900; font-size: clamp(20px, 4vw, 28px); text-transform: uppercase; color: var(--white); line-height: 1.1; margin-bottom: 8px; }
+  .cta-card p { font-size: 14px; color: rgba(255,255,255,0.85); margin-bottom: 20px; line-height: 1.55; }
+  .cta-btn { display: inline-block; background: var(--brand-dark); color: var(--white); font-family: "Barlow Condensed", sans-serif; font-weight: 900; font-size: 15px; letter-spacing: 2.5px; text-transform: uppercase; padding: 14px 32px; border-radius: 5px; text-decoration: none; cursor: pointer; border: none; transition: background 0.2s; }
+  .cta-btn:hover { background: #111; }
+  .cta-disclaimer { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 10px; font-style: italic; }
+
+  /* FEEDBACK MECHANISM */
+  .feedback-wrap { text-align: center; padding: 24px 20px 8px; }
+  .feedback-question { font-size: 13px; color: var(--ash); margin-bottom: 12px; }
+  .feedback-btns { display: flex; justify-content: center; gap: 10px; }
+  .feedback-btn { padding: 7px 20px; font-family: "Barlow", sans-serif; font-size: 12px; font-weight: 700; border: 1.5px solid #d0d0d0; border-radius: 5px; background: none; color: var(--ash); cursor: pointer; transition: all 0.15s; }
+  .feedback-btn:hover { border-color: var(--brand-primary); color: var(--brand-text); }
+  .feedback-response { font-size: 13px; color: var(--ash); line-height: 1.6; }
+  .feedback-response a { color: var(--brand-primary); text-decoration: none; font-weight: 700; }
+  .feedback-response a:hover { text-decoration: underline; }
+  .feedback-textarea { width: 100%; max-width: 400px; margin: 10px auto 0; display: block; padding: 10px 14px; font-family: "Barlow", sans-serif; font-size: 13px; color: var(--brand-text); background: var(--smoke); border: 1.5px solid #d0d0d0; border-radius: 6px; resize: vertical; min-height: 72px; outline: none; }
+  .feedback-textarea:focus { border-color: var(--brand-primary); }
+  .feedback-submit { margin-top: 8px; padding: 8px 22px; font-family: "Barlow", sans-serif; font-size: 12px; font-weight: 700; background: none; border: 1.5px solid var(--brand-primary); color: var(--brand-primary); border-radius: 5px; cursor: pointer; transition: all 0.15s; }
+  .feedback-submit:hover { background: var(--brand-primary); color: var(--white); }
+
+  .powered-by { margin-top: 24px; text-align: center; padding-top: 18px; border-top: 1px solid #e0e0e0; font-size: 11px; color: #ccc; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+  @media (max-width: 480px) { .card { padding: 20px 16px; } .trust-bar { gap: 14px; } .topbar { padding: 0 16px; } }
+</style>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6s7SOMNKYSG1TAHTnJsmLp41fcLo8xUk&libraries=places&v=beta&callback=initAutocomplete" async defer></script>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand-name">FL<span>I</span>NT</div>
+  <a class="topbar-phone" href="tel:5122656365">(512) 265-6365</a>
+</div>
+
+<div class="hero">
+  <div class="hero-eyebrow">Free 2-Minute Check</div>
+  <h1>Is Your HVAC System<br/><em>Leaving You Out in the Heat?</em></h1>
+  <p>Answer a few quick questions about your system and get an honest picture of what it's costing you — and what the numbers actually mean for your decision.</p>
+</div>
+
+<div class="trust-bar">
+  <div class="trust-item"><span>⚡</span> Results in 60 seconds</div>
+  <div class="trust-item"><span>🔒</span> No email required</div>
+  <div class="trust-item"><span>🏠</span> Built for homeowners</div>
+  <div class="trust-item"><span>✅</span> Free — no obligation</div>
+</div>
+
+<div class="main">
+
+  <!-- OPERATING STATUS -->
+  <div class="status-banner" id="status-banner">
+    <div class="status-left">
+      <div class="status-icon" id="status-icon">🌡️</div>
+      <div class="status-label">
+        Is your system currently operating properly?
+        <small>Heating or cooling as expected — not just running in fan mode</small>
+      </div>
+    </div>
+    <div class="status-toggle">
+      <button class="status-btn active-yes" id="status-yes" onclick="setStatus(true)">YES</button>
+      <button class="status-btn" id="status-no" onclick="setStatus(false)">NO</button>
+    </div>
+  </div>
+
+  <!-- CARD 01 -->
+  <div class="card">
+    <div class="card-title">01 — Your Home &amp; System</div>
+
+    <!-- UPDATE 1: CLIMATE REGION — first input -->
+    <div class="field">
+      <label>Your City &amp; State <small>e.g. Austin, TX</small></label>
+      <div style="position:relative;" id="city-input-wrapper">
+        <span id="search-icon" style="position:absolute; left:18px; top:50%; transform:translateY(-50%); font-size:18px; color:var(--ash); pointer-events:none;">🔍</span>
+        <input type="text" id="city-input" placeholder="Search your city & state..." autocomplete="off" style="
+          width:100%; padding:14px 48px 14px 48px;
+          border-radius:999px; border: 1.5px solid #e0e0e0;
+          background:var(--white); font-family:'Barlow',sans-serif;
+          font-size:15px; font-weight:600; color:var(--brand-text);
+          box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+          outline:none; transition: box-shadow 0.2s, border-color 0.2s;
+        " onfocus="this.style.boxShadow='0 4px 18px rgba(0,0,0,0.13)'; this.style.borderColor='#c0c0c0';"
+           onblur="this.style.boxShadow='0 2px 10px rgba(0,0,0,0.08)'; this.style.borderColor='#e0e0e0';"/>
+        <span id="city-clear" onclick="clearCity()" style="display:none; position:absolute; right:18px; top:50%; transform:translateY(-50%); font-size:16px; color:var(--ash); cursor:pointer; font-weight:700;">✕</span>
+      </div>
+      <div id="city-confirm" style="display:none; margin-top:8px; padding:9px 14px; border-radius:6px; background:#f0faf4; border:1.5px solid rgba(39,174,96,0.3); font-size:12px; font-weight:700; color:#1e7e3e;">📍 <span id="city-confirm-text"></span></div>
+      <div class="helper" id="climate-helper">Enter your city and we'll automatically apply the right climate settings for your area.</div>
+    </div>
+
+    <div class="field">
+      <label>Home Size</label>
+      <select id="home-size">
+        <option value="0.80">Under 1,500 sq ft</option>
+        <option value="1.0" selected>1,500 – 2,500 sq ft</option>
+        <option value="1.25">2,500 – 4,000 sq ft</option>
+        <option value="1.55">Over 4,000 sq ft</option>
+      </select>
+      <div class="helper">Larger homes put more demand on your system and have higher exposure to efficiency loss.</div>
+    </div>
+
+    <div class="field">
+      <label>System Type</label>
+      <select id="system-type" onchange="updateSystemHelper()">
+        <option value="central">Central Air &amp; Heat</option>
+        <option value="heatpump">Heat Pump</option>
+        <option value="minisplit">Mini-Split</option>
+        <option value="furnace">Furnace Only</option>
+        <option value="window">Window / Portable Unit</option>
+      </select>
+      <div class="helper" id="system-helper">Most common whole-home system. Avg. replacement cost: $5,000–$12,000 per unit.</div>
+    </div>
+
+    <div class="field">
+      <label>How many units / zones? <small>Total count</small></label>
+      <input type="number" id="unit-count" min="1" max="50" placeholder="e.g. 1" value="1" oninput="updateUnitHelper()"/>
+      <div class="helper" id="unit-helper">A standard home has 1. Mini-splits or multi-zone systems may have 2–5 or more. Count each indoor unit or zone separately.</div>
+    </div>
+
+    <div class="field">
+      <label>How old is your system? <small>Best estimate</small></label>
+      <div class="input-wrap has-suffix">
+        <input type="number" id="age" min="0" max="40" placeholder="e.g. 12" oninput="updateAgeDots()"/>
+        <span class="suffix">years</span>
+      </div>
+      <div class="age-visual" id="age-dots"></div>
+      <div class="helper" id="age-helper">Most HVAC systems last 15–20 years. Efficiency drops significantly after year 10.</div>
+    </div>
+
+    <div class="field">
+      <label>Major repairs in the last 2 years?</label>
+      <div class="slider-wrap">
+        <input type="range" id="repairs" min="0" max="8" step="1" value="0" oninput="sv('repairs-val', this.value); updateRepairHelper()"/>
+        <div class="slider-pill" id="repairs-val">0</div>
+      </div>
+      <div class="helper" id="repair-helper">No repairs — that's a good sign.</div>
+    </div>
+
+    <div class="field">
+      <label>Maintenance history</label>
+      <select id="maintenance" onchange="updateMaintHelper()">
+        <option value="annual">Annual professional tune-up</option>
+        <option value="sometimes">Occasional — every few years</option>
+        <option value="never" selected>Never serviced</option>
+      </select>
+      <div class="helper" id="maint-helper">Systems that are never serviced lose efficiency faster and fail sooner.</div>
+    </div>
+  </div>
+
+  <!-- CARD 02 -->
+  <div class="card">
+    <div class="card-title">02 — Performance &amp; Costs</div>
+
+    <div class="field">
+      <label>Average monthly energy bill? <small>Peak season</small></label>
+      <div class="input-wrap has-prefix">
+        <span class="prefix">$</span>
+        <input type="number" id="energy-bill" min="0" placeholder="e.g. 220"/>
+      </div>
+      <div class="helper">Think about your highest summer or winter month. Check your last utility bill for accuracy.</div>
+    </div>
+
+    <div class="field">
+      <label>Current repair quote (if any) <small>Enter 0 if none</small></label>
+      <div class="input-wrap has-prefix">
+        <span class="prefix">$</span>
+        <input type="number" id="repair-quote" min="0" placeholder="0" value="0"/>
+      </div>
+      <div class="helper">If a technician has quoted you a repair, enter it here. Otherwise leave as 0.</div>
+    </div>
+
+    <div class="field">
+      <label style="margin-bottom:12px;">Performance Signals <small>Select all that apply</small></label>
+      <div class="signal-row">
+        <div class="signal-label">Energy bill noticeably higher than it used to be?<small>Unexplained bill spikes are a leading efficiency indicator</small></div>
+        <div class="toggle-group">
+          <button class="toggle-btn active-yes" id="sig1-yes" onclick="setSignal(1,true)">YES</button>
+          <button class="toggle-btn" id="sig1-no" onclick="setSignal(1,false)">NO</button>
+        </div>
+      </div>
+      <div class="signal-row">
+        <div class="signal-label">Some rooms harder to heat or cool than others?<small>Uneven temps point to a system struggling to keep up</small></div>
+        <div class="toggle-group">
+          <button class="toggle-btn active-yes" id="sig2-yes" onclick="setSignal(2,true)">YES</button>
+          <button class="toggle-btn" id="sig2-no" onclick="setSignal(2,false)">NO</button>
+        </div>
+      </div>
+      <div class="signal-row">
+        <div class="signal-label">System running constantly or making unusual noises?<small>Short-cycling or strange sounds often signal imminent failure</small></div>
+        <div class="toggle-group">
+          <button class="toggle-btn active-yes" id="sig3-yes" onclick="setSignal(3,true)">YES</button>
+          <button class="toggle-btn" id="sig3-no" onclick="setSignal(3,false)">NO</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="calc-btn" onclick="calculate()">Show Me My Results →</button>
+
+  <!-- RESULTS -->
+  <div class="results" id="results">
+    <br/>
+    <div class="verdict-banner replace" id="verdict-banner">
+      <div class="verdict-icon" id="verdict-icon">🔥</div>
+      <div class="verdict-label">Your HVAC Assessment</div>
+      <div class="verdict-title" id="verdict-title">Loading...</div>
+      <div class="verdict-desc" id="verdict-desc">Loading...</div>
+    </div>
+
+    <!-- UPDATE 4: MAINTENANCE TIPS — healthy verdict only -->
+    <div class="tips-card" id="tips-card">
+      <div class="tips-title">Two things to keep an eye on</div>
+      <div id="tips-body"></div>
+    </div>
+
+    <div class="output-grid">
+      <div class="output-card red-top">
+        <div class="output-icon">💸</div>
+        <div class="output-label">Wasting Per Year</div>
+        <div class="output-value red" id="out-waste">$0</div>
+        <div class="output-sub">in avoidable costs</div>
+      </div>
+      <div class="output-card">
+        <div class="output-icon">🔧</div>
+        <div class="output-label">Recommendation</div>
+        <div class="output-value blue" id="out-rec">—</div>
+        <div class="output-sub" id="out-rec-sub">based on your inputs</div>
+      </div>
+      <div class="output-card green-top">
+        <div class="output-icon">📉</div>
+        <div class="output-label">Est. Annual Savings</div>
+        <div class="output-value green" id="out-save">$0</div>
+        <div class="output-sub">with updated system(s)</div>
+      </div>
+    </div>
+
+    <!-- UPDATE 5: HOW WE CALCULATE — transparency update -->
+    <div class="how-we-calc">
+      <button class="how-we-calc-toggle" onclick="toggleCalc()">🔍 How we calculated these numbers<span id="calc-arrow">▼ Show</span></button>
+      <div class="how-we-calc-body" id="calc-body">
+
+        <div class="calc-step">
+          <div class="calc-step-label estimate">Conservative Estimate</div>
+          <div class="calc-step-title">Step 1 — Cost of a Non-Functioning System (Annual)</div>
+          <div class="calc-step-text">When a system is running but not conditioning air, homeowners incur real daily costs. We estimate a conservative floor of <strong>$900/year — approximately $75/month</strong> — covering temporary cooling or heating solutions, portable unit rentals, service call fees, and daily comfort disruption. This figure is intentionally conservative. Actual costs are typically higher depending on the number of people in the home, local temperatures, and whether hotel stays or extended rentals are involved. If your situation involves more than basic inconvenience, your real cost-of-waiting is likely several times this estimate.</div>
+          <div class="calc-step-formula">Operating Cost = $75/month × 12 = $900/year (applied only when system is not operating properly)</div>
+        </div>
+
+        <div class="calc-step">
+          <div class="calc-step-label cited">Cited Fact</div>
+          <div class="calc-step-title">Step 2 — Age-Related Efficiency Loss</div>
+          <div class="calc-step-text">Based on EPA and DOE HVAC performance data, systems lose approximately <strong>3–5% efficiency per year after year 8</strong>. We use a conservative 3.5% figure, capped at 40% total loss. Applied to the HVAC portion of your energy bill (estimated at 45% of total bill, per DOE residential energy data), scaled by home size and unit count, multiplied by 12 months.</div>
+          <div class="calc-step-formula">Efficiency Loss = (Age − 8) × 3.5% × sizeMultiplier — capped at 40%
+Annual Waste = Monthly Bill × 45% × Efficiency Loss × unitCount × 12</div>
+        </div>
+
+        <div class="calc-step">
+          <div class="calc-step-label estimate">Conservative Estimate</div>
+          <div class="calc-step-title">Step 3 — Repair Costs</div>
+          <div class="calc-step-text">Each major repair is estimated at <strong>$400</strong> — a conservative average for significant HVAC service calls, based on HomeAdvisor and Angi industry data. Adjusted upward by maintenance history: systems that are never serviced accumulate more failure events. Scaled by unit count.</div>
+          <div class="calc-step-formula">Repair Cost = Repairs × $400 × maintFactor × unitCount</div>
+        </div>
+
+        <div class="calc-step">
+          <div class="calc-step-label estimate">Conservative Estimate</div>
+          <div class="calc-step-title">Step 4 — Performance Signal Surcharge</div>
+          <div class="calc-step-text">Each behavioral warning signal you flagged — rising bills, uneven temps, unusual operation — indicates efficiency loss beyond what age alone explains. We assign conservative annual cost figures to each: rising bills ($180), uneven temperatures ($240), constant running or noises ($360). These are floor estimates — actual impact varies.</div>
+          <div class="calc-step-formula">Signal Cost = (sig1 ? $180 : 0) + (sig2 ? $240 : 0) + (sig3 ? $360 : 0) per year</div>
+        </div>
+
+        <div class="calc-step">
+          <div class="calc-step-label cited">Cited Fact</div>
+          <div class="calc-step-label regional" style="margin-left:6px;">Regional Note</div>
+          <div class="calc-step-title">Step 5 — Estimated Annual Savings</div>
+          <div class="calc-step-text">Based on ENERGY STAR replacement data, a new high-efficiency system typically reduces energy consumption by <strong>25–35%</strong>. We use a conservative 30% savings rate. Energy savings estimates are adjusted for your selected climate region based on average annual runtime differences across U.S. climate zones — sourced from EIA residential energy consumption survey data. Hot and arid climates see higher savings potential due to extended cooling seasons; mild climates see lower savings due to reduced runtime.</div>
+          <div class="calc-step-formula">Annual Savings = Monthly Bill × 30% × sizeMultiplier × unitCount × 12 × regionMultiplier</div>
+        </div>
+
+        <div class="calc-step">
+          <div class="calc-step-label standard">Industry Standard</div>
+          <div class="calc-step-title">Step 6 — The Rule of $5,000</div>
+          <div class="calc-step-text">The Rule of $5,000 is a real heuristic used by HVAC professionals to evaluate repair vs. replace decisions. Multiply your system age by any repair quote. If the result exceeds <strong>$5,000</strong>, replacement is generally considered the more financially sound choice. This is not a guarantee — it is a widely used decision framework, not a precise financial calculation.</div>
+          <div class="calc-step-formula">Rule of $5,000 = System Age × Repair Quote
+Example: 14 yrs × $450 = $6,300 → Exceeds $5,000 → Replacement worth considering</div>
+        </div>
+
+        <div class="sources">
+          📌 Efficiency loss rates based on EPA and DOE HVAC performance data. Repair cost averages sourced from HomeAdvisor and Angi industry reports (2024–2025). Energy savings estimates based on ENERGY STAR replacement data. Discomfort cost estimates are conservative floor figures — actual costs vary. Regional multipliers based on EIA residential energy consumption survey data by climate zone. All figures are estimates — actual results will vary based on your system, your market, and your specific circumstances. This tool is designed to help you ask better questions, not replace a professional assessment.
+        </div>
+      </div>
+    </div>
+
+    <div class="breakdown-card">
+      <div class="breakdown-title">Your Full Cost Breakdown</div>
+      <div id="breakdown-rows"></div>
+    </div>
+
+    <div class="disclaimer"><strong>Heads up:</strong> These are estimates based on industry averages and your inputs — not guaranteed outcomes or quotes. Real results depend on your equipment brand, local climate, utility rates, and usage. This tool is designed to help you understand the opportunity and ask better questions, not promise a specific dollar figure.</div>
+
+    <div class="rule-box">
+      <div class="rule-icon">💡</div>
+      <div>
+        <div class="rule-title">The Rule of $5,000</div>
+        <div class="rule-text" id="rule-text">Loading...</div>
+      </div>
+    </div>
+
+    <!-- UPDATE 3: CTA PER VERDICT -->
+    <div class="cta-card">
+      <h3 id="cta-h">Want Your Own Custom Branded Calculator for Your Business?</h3>
+      <p id="cta-p">This tool was built by Flint. We create custom branded calculators for local service businesses that qualify leads, build trust, and drive calls — before a customer ever picks up the phone.</p>
+      <a class="cta-btn" id="cta-btn" href="https://calendly.com/admin-flinttool/30min" target="_blank">Get a Free Second Opinion →</a>
+      <div class="cta-disclaimer">Free assessment. No obligation.</div>
+    </div>
+
+    <!-- Secondary Calendly link — healthy verdict only -->
+    <div class="secondary-link" id="secondary-link" style="display:none;">
+      Want a professional to verify these results? <a href="https://calendly.com/admin-flinttool/30min" target="_blank">Book a free call.</a>
+    </div>
+
+    <!-- UPDATE 6: FEEDBACK MECHANISM -->
+    <div class="feedback-wrap" id="feedback-wrap">
+      <div class="feedback-question" id="feedback-question">Was this assessment helpful?</div>
+      <div class="feedback-btns" id="feedback-btns">
+        <button class="feedback-btn" onclick="feedbackYes()">Yes — it helped</button>
+        <button class="feedback-btn" onclick="feedbackNo()">Not really</button>
+      </div>
+    </div>
+
+  </div><!-- /results -->
+
+  <div class="powered-by">flinttool.com · Turn your website into a sales tool · Veteran Owned</div>
+</div>
+
+<script>
+// ── STATE ──
+const signals = { 1: true, 2: true, 3: true };
+let systemOperating = true;
+let hasCalculated = false;
+let climateRegion = "hot_humid";
+
+// Regional savings multipliers — applied to annualSavings only
+const REGION_MULT = {
+  hot_arid:  1.15,
+  hot_humid: 1.10,
+  mixed:     1.0,
+  mild:      0.85,
+  cold:      1.05,
+};
+
+const REGION_HELPERS = {
+  hot_arid:  "Extreme heat means your system runs significantly more hours per year than average — and a more efficient system saves proportionally more. Dry conditions also accelerate wear on certain components.",
+  hot_humid: "Your climate affects how hard your system works and how much you stand to save with a more efficient one. Hot, humid climates like Central Texas see some of the highest HVAC runtime hours in the country.",
+  mixed:     "Mixed climates use both heating and cooling significantly. Your savings potential is close to the national average — efficiency upgrades pay off steadily over time.",
+  mild:      "Moderate temperatures mean lower system runtime overall. Efficiency upgrades still matter, but the annual savings potential is lower than in more extreme climates.",
+  cold:      "Heating load in cold climates is significant. A well-matched system with proper maintenance can meaningfully reduce your heating costs through the long winter months.",
+};
+
+// Replacement costs per unit by system type
+const REPLACE_COST = {
+  central:   { low: 5000,  high: 12000, label: "Central Air & Heat" },
+  heatpump:  { low: 4200,  high: 12000, label: "Heat Pump" },
+  minisplit: { low: 2000,  high: 5000,  label: "Mini-Split (per zone)" },
+  furnace:   { low: 1700,  high: 7000,  label: "Furnace Only" },
+  window:    { low: 300,   high: 800,   label: "Window / Portable Unit" },
+};
+
+const SYSTEM_HELPERS = {
+  central:   "Most common whole-home system. Avg. replacement cost: $5,000–$12,000 per unit.",
+  heatpump:  "Energy-efficient heating and cooling combined. Avg. replacement cost: $4,200–$12,000.",
+  minisplit: "Ductless zone-based system. Avg. replacement cost: $2,000–$5,000 per zone/unit.",
+  furnace:   "Heating only — typically paired with separate AC. Avg. replacement cost: $1,700–$7,000.",
+  window:    "Single-room units. Lower replacement cost: $300–$800 per unit.",
+};
+
+// UPDATE 4: TIPS LIBRARY
+const TIPS = {
+  under5: {
+    any:      "Change your air filter every 60–90 days. A clogged filter forces your system to work harder and is the single most common cause of early efficiency loss in newer systems.",
+    hot_arid: "In high-heat climates your system runs significantly more hours per year than average. Schedule a coil cleaning once a year — heat and dust buildup reduce efficiency faster here than in milder climates.",
+    hot_humid:"In high-heat climates your system runs significantly more hours per year than average. Schedule a coil cleaning once a year — heat and dust buildup reduce efficiency faster here than in milder climates.",
+    cold:     "Before heating season, have your heat exchanger inspected. Cracks in the heat exchanger are the most common — and most dangerous — issue in furnace-based systems, and they are easy to miss without a professional check.",
+    mild:     "Your moderate climate means lower system stress overall. Focus on keeping the outdoor unit clear of debris and changing filters regularly — basic maintenance will keep a newer system running efficiently for years.",
+    mixed:    "Your moderate climate means lower system stress overall. Focus on keeping the outdoor unit clear of debris and changing filters regularly — basic maintenance will keep a newer system running efficiently for years.",
+  },
+  mid: {
+    hot_arid:  "In dry climates, refrigerant lines and seals dry out faster than average. If you notice your system cycling more frequently or your bills creeping up, a refrigerant check is a reasonable preventive step at this age.",
+    hot_humid: "Humidity accelerates drain line buildup. Check and flush your condensate drain line once a year — a clogged drain line is one of the most common causes of water damage from HVAC systems in Gulf Coast and Southeast climates.",
+    mixed:     "At this age your system is in its most efficient years. Keep up with annual professional tune-ups — catching small issues now prevents the repair bills that show up between years 10 and 15.",
+    mild:      "At this age your system is in its most efficient years. Keep up with annual professional tune-ups — catching small issues now prevents the repair bills that show up between years 10 and 15.",
+    cold:      "Your heating system works hardest in these years. Make sure air ducts are sealed and insulated — up to 30 percent of heating energy is lost through leaky ducts in older northern-climate homes.",
+  },
+  over10: {
+    hot_arid:  "Systems over 10 years old in hot, dry climates often have worn capacitors and contactors — inexpensive parts that fail without warning and shut the system down entirely, usually on the hottest day of the year. Ask your technician to inspect these proactively.",
+    hot_humid: "At this age in a humid climate, check your evaporator coil for mold or ice buildup. High humidity accelerates both — either reduces your air quality and your system efficiency significantly.",
+    mixed:     "The Rule of $5,000 becomes relevant at this age: multiply your system age by any repair quote you receive. If the result exceeds $5,000, replacement typically makes more financial sense than a repair. Keep that number in mind before authorizing any service work.",
+    cold:      "Older systems in cold climates work harder and wear faster than average. If your heating bills have increased without a rate change, ask a technician to measure your system efficiency — a tune-up or minor repair can sometimes recover 10–15 percent of lost efficiency.",
+    mild:      "In mild climates systems over 10 years old often outlast national averages. Focus on maintaining refrigerant levels and keeping outdoor units clear — your system likely has more life left than average if it has been serviced regularly.",
+  },
+};
+
+function getTips(age, maint, region) {
+  const tips = [];
+  // Rule 1: maintenance gap always gets filter/service tip first
+  if (maint === "never" || maint === "sometimes") {
+    tips.push("Change your air filter every 60–90 days and schedule a professional tune-up if you haven't had one in the last 2 years. Dirty filters and uncleaned coils are the most common — and most preventable — causes of efficiency loss and early system failure.");
+  }
+  // Rule 2: age over 10 gets efficiency check tip
+  if (age > 10 && tips.length < 2) {
+    const tip = TIPS.over10[region] || TIPS.over10.mixed;
+    if (!tips.includes(tip)) tips.push(tip);
+  }
+  // Rule 3: age under 5
+  if (age <= 5 && tips.length < 2) {
+    const tip = TIPS.under5[region] || TIPS.under5.any;
+    if (!tips.includes(tip)) tips.push(tip);
+  }
+  // Rule 4: age 5-10
+  if (age > 5 && age <= 10 && tips.length < 2) {
+    const tip = TIPS.mid[region] || TIPS.mid.mixed;
+    if (!tips.includes(tip)) tips.push(tip);
+  }
+  // Fill second slot with regional tip if not already 2
+  if (tips.length < 2) {
+    let regionTip;
+    if (age > 10)       regionTip = TIPS.over10[region] || TIPS.over10.mixed;
+    else if (age <= 5)  regionTip = TIPS.under5[region] || TIPS.under5.any;
+    else                regionTip = TIPS.mid[region] || TIPS.mid.mixed;
+    if (!tips.includes(regionTip)) tips.push(regionTip);
+  }
+  return tips.slice(0, 2);
+}
+
+function sv(id, val) { document.getElementById(id).textContent = val; }
+function fmt(n) { return "$" + Math.round(Math.abs(n)).toLocaleString(); }
+
+function setStatus(val) {
+  systemOperating = val;
+  document.getElementById("status-yes").className = "status-btn" + (val  ? " active-yes" : "");
+  document.getElementById("status-no" ).className = "status-btn" + (!val ? " active-no"  : "");
+  document.getElementById("status-icon").textContent = val ? "🌡️" : "❌";
+  document.getElementById("status-banner").className = val ? "status-banner" : "status-banner status-no";
+  liveUpdate();
+}
+
+function setSignal(num, val) {
+  signals[num] = val;
+  document.getElementById("sig"+num+"-yes").className = "toggle-btn" + (val  ? " active-yes" : "");
+  document.getElementById("sig"+num+"-no" ).className = "toggle-btn" + (!val ? " active-no"  : "");
+  liveUpdate();
+}
+
+const REGION_LABELS = {
+  hot_arid:  "Hot & Dry",
+  hot_humid: "Hot & Humid",
+  mixed:     "Mixed Climate",
+  mild:      "Mild / Coastal",
+  cold:      "Cold / Northern",
+};
+
+// ── GOOGLE PLACES AUTOCOMPLETE (New API — post March 2025) ──
+// Google Maps callback — must be a regular function, not async
+function initAutocomplete() {
+  initAutocompletAsync();
+}
+
+async function initAutocompletAsync() {
+  const { PlaceAutocompleteElement } = await google.maps.importLibrary("places");
+
+  const placeAutocomplete = new PlaceAutocompleteElement({
+    componentRestrictions: { country: "us" },
+    types: ["(cities)"],
+  });
+
+  // Style the PlaceAutocompleteElement to match our pill input
+  placeAutocomplete.style.cssText = `
+    width: 100%;
+    --gmp-mat-color-primary: #E89420;
+  `;
+
+  // Replace our custom input with the Google element inside the wrapper
+  const wrapper = document.getElementById("city-input-wrapper");
+  const oldInput = document.getElementById("city-input");
+  const searchIcon = document.getElementById("search-icon");
+  const clearBtn = document.getElementById("city-clear");
+
+  wrapper.insertBefore(placeAutocomplete, oldInput);
+  oldInput.style.display = "none";
+  searchIcon.style.display = "none";
+
+  // CORRECT event: gmp-select, CORRECT data: placePrediction.toPlace()
+  placeAutocomplete.addEventListener("gmp-select", async ({ placePrediction }) => {
+    const place = placePrediction.toPlace();
+    await place.fetchFields({ fields: ["displayName", "formattedAddress", "location"] });
+
+    const lat = place.location.lat();
+    const lng = place.location.lng();
+    climateRegion = coordsToRegion(lat, lng);
+
+    const name = place.displayName || place.formattedAddress;
+    document.getElementById("city-confirm").style.display = "block";
+    document.getElementById("city-confirm-text").textContent = name + " → " + REGION_LABELS[climateRegion] + " region";
+    document.getElementById("climate-helper").textContent = REGION_HELPERS[climateRegion];
+    clearBtn.style.display = "block";
+
+    liveUpdate();
+  });
+
+  clearBtn.addEventListener("click", function() {
+    placeAutocomplete.value = "";
+    clearBtn.style.display = "none";
+    document.getElementById("city-confirm").style.display = "none";
+    document.getElementById("climate-helper").textContent = "Enter your city and we'll automatically apply the right climate settings for your area.";
+    climateRegion = "hot_humid";
+    liveUpdate();
+  });
+}
+
+// Map lat/lng to one of 5 climate regions using bounding boxes
+function coordsToRegion(lat, lng) {
+  // Cold — Northern US (above ~42°N and cold-climate states)
+  if (lat >= 45) return "cold";
+  // Alaska
+  if (lat >= 54) return "cold";
+  // Pacific Northwest / Coastal mild
+  if (lng <= -122 && lat >= 37 && lat <= 49) return "mild";
+  // Coastal California mild
+  if (lng <= -117 && lat >= 32.5 && lat <= 38) return "mild";
+  // Hot & Arid — Southwest interior
+  if (lat >= 31 && lat <= 37 && lng >= -117 && lng <= -104) return "hot_arid";
+  // Nevada interior
+  if (lat >= 36 && lat <= 42 && lng >= -120 && lng <= -114) return "hot_arid";
+  // Hot & Humid — Texas, Gulf Coast, Florida, SE
+  if (lat <= 36 && lng >= -100 && lng <= -80) return "hot_humid";
+  // Florida
+  if (lat <= 31 && lng >= -87 && lng <= -79) return "hot_humid";
+  // Cold northern tier (MN, WI, MI UP, etc.)
+  if (lat >= 42 && lng >= -97 && lng <= -82) return "cold";
+  // Northeast cold
+  if (lat >= 42 && lng >= -80 && lng <= -66) return "cold";
+  // Mid-Atlantic / Mixed
+  if (lat >= 36 && lat <= 42 && lng >= -82 && lng <= -66) return "mixed";
+  // Midwest mixed
+  if (lat >= 36 && lat <= 42 && lng >= -97 && lng <= -82) return "mixed";
+  // Default fallback
+  return "mixed";
+}
+
+function updateClimateFromDropdown() {
+  climateRegion = document.getElementById("climate-region") ? document.getElementById("climate-region").value : "hot_humid";
+  document.getElementById("climate-helper").textContent = REGION_HELPERS[climateRegion];
+  liveUpdate();
+}
+
+function updateSystemHelper()
