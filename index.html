@@ -666,8 +666,9 @@ async function initAutocomplete() {
   oldInput.style.display = "none";
   searchIcon.style.display = "none";
 
-  // Style the inner input that Google renders
-  placeAutocomplete.addEventListener("gmp-placeselect", async ({ place }) => {
+  // CORRECT event: gmp-select, CORRECT data: placePrediction.toPlace()
+  placeAutocomplete.addEventListener("gmp-select", async ({ placePrediction }) => {
+    const place = placePrediction.toPlace();
     await place.fetchFields({ fields: ["displayName", "formattedAddress", "location"] });
 
     const lat = place.location.lat();
