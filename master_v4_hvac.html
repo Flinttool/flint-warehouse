@@ -42,7 +42,6 @@
 
   .main { max-width: 660px; margin: 0 auto; padding: 32px 20px 80px; }
 
-  /* OPERATING STATUS */
   .status-banner { border-radius: 10px; padding: 22px 24px; margin-bottom: 18px; display: flex; align-items: center; justify-content: space-between; gap: 20px; border: 2px solid #e0e0e0; background: var(--white); box-shadow: 0 2px 16px rgba(0,0,0,0.06); transition: all 0.2s; }
   .status-banner.status-no { border-color: rgba(192,57,43,0.45); background: #fff8f7; }
   .status-left { display: flex; align-items: center; gap: 14px; }
@@ -65,8 +64,8 @@
 
   select, input[type="number"] { width: 100%; background: var(--smoke); border: 2px solid transparent; border-radius: 6px; color: var(--brand-text); font-family: "Barlow", sans-serif; font-size: 16px; font-weight: 700; padding: 13px 16px; outline: none; transition: border-color 0.2s, background 0.2s, box-shadow 0.2s; appearance: none; -moz-appearance: textfield; }
   input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
-  select:focus, input:focus { border-color: var(--brand-primary); background: #fffaf3; box-shadow: 0 0 0 4px rgba(232,148,32,0.12); }
-  input.error { border-color: var(--red); background: #fff8f8; }
+  select:focus, input[type="number"]:focus { border-color: var(--brand-primary); background: #fffaf3; box-shadow: 0 0 0 4px rgba(232,148,32,0.12); }
+  input.error { border-color: var(--red) !important; background: #fff8f8 !important; }
 
   .input-wrap { display: flex; align-items: stretch; }
   .prefix { display: flex; align-items: center; padding: 0 13px; background: #e8e8e8; border: 2px solid #e0e0e0; border-right: none; border-radius: 6px 0 0 6px; font-size: 15px; font-weight: 700; color: var(--brand-text); pointer-events: none; flex-shrink: 0; }
@@ -112,8 +111,8 @@
   .verdict-banner.good    .verdict-title { color: var(--green); }
   .verdict-desc { font-size: 14px; color: var(--ash); line-height: 1.65; max-width: 460px; margin: 0 auto; }
   .verdict-desc strong { color: var(--brand-text); }
+  .zone-badge { display: inline-block; margin-top: 12px; padding: 5px 14px; border-radius: 20px; background: rgba(232,148,32,0.12); font-size: 11px; font-weight: 700; color: var(--brand-primary); letter-spacing: 0.5px; }
 
-  /* MAINTENANCE TIPS — healthy verdict only */
   .tips-card { background: #f0faf4; border-radius: 10px; padding: 22px 24px; margin-bottom: 14px; display: none; }
   .tips-card.visible { display: block; }
   .tips-title { font-family: "Barlow Condensed", sans-serif; font-weight: 900; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: var(--brand-primary); margin-bottom: 16px; }
@@ -121,11 +120,8 @@
   .tip-row:last-child { margin-bottom: 0; }
   .tip-icon { color: var(--brand-primary); font-size: 16px; flex-shrink: 0; margin-top: 1px; }
   .tip-text { font-size: 14px; color: var(--brand-text); font-style: italic; line-height: 1.65; }
-
-  /* Secondary Calendly link for healthy verdict */
   .secondary-link { text-align: center; margin-top: 16px; font-size: 12px; color: var(--ash); }
   .secondary-link a { color: var(--ash); text-decoration: underline; }
-  .secondary-link a:hover { color: var(--brand-text); }
 
   .output-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 14px; }
   @media (max-width: 540px) { .output-grid { grid-template-columns: 1fr; } }
@@ -135,9 +131,9 @@
   .output-icon  { font-size: 22px; margin-bottom: 6px; }
   .output-label { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--ash); margin-bottom: 6px; line-height: 1.4; }
   .output-value { font-family: "Barlow Condensed", sans-serif; font-weight: 900; font-size: 26px; color: var(--brand-text); line-height: 1; margin-bottom: 3px; }
-  .output-value.blue  { color: var(--brand-primary); }
-  .output-value.green { color: var(--green); }
-  .output-value.red   { color: var(--red); }
+  .output-value.orange { color: var(--brand-primary); }
+  .output-value.green  { color: var(--green); }
+  .output-value.red    { color: var(--red); }
   .output-sub { font-size: 11px; color: var(--ash); line-height: 1.4; }
 
   .how-we-calc { background: var(--white); border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 14px; overflow: hidden; }
@@ -164,7 +160,7 @@
   .b-row:last-child { border-bottom: none; }
   .b-label { color: var(--ash); line-height: 1.4; flex: 1; }
   .b-val { font-weight: 700; color: var(--brand-text); white-space: nowrap; }
-  .b-val.blue   { color: var(--brand-primary); }
+  .b-val.orange { color: var(--brand-primary); }
   .b-val.green  { color: var(--green); }
   .b-val.red    { color: var(--red); }
   .b-val.yellow { color: var(--yellow); }
@@ -189,26 +185,21 @@
   .cta-btn:hover { background: #111; }
   .cta-disclaimer { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 10px; font-style: italic; }
 
-  /* FEEDBACK MECHANISM */
   .feedback-wrap { text-align: center; padding: 24px 20px 8px; }
   .feedback-question { font-size: 13px; color: var(--ash); margin-bottom: 12px; }
   .feedback-btns { display: flex; justify-content: center; gap: 10px; }
   .feedback-btn { padding: 7px 20px; font-family: "Barlow", sans-serif; font-size: 12px; font-weight: 700; border: 1.5px solid #d0d0d0; border-radius: 5px; background: none; color: var(--ash); cursor: pointer; transition: all 0.15s; }
   .feedback-btn:hover { border-color: var(--brand-primary); color: var(--brand-text); }
-  .feedback-response { font-size: 13px; color: var(--ash); line-height: 1.6; }
+  .feedback-response { font-size: 13px; color: var(--ash); }
   .feedback-response a { color: var(--brand-primary); text-decoration: none; font-weight: 700; }
-  .feedback-response a:hover { text-decoration: underline; }
   .feedback-textarea { width: 100%; max-width: 400px; margin: 10px auto 0; display: block; padding: 10px 14px; font-family: "Barlow", sans-serif; font-size: 13px; color: var(--brand-text); background: var(--smoke); border: 1.5px solid #d0d0d0; border-radius: 6px; resize: vertical; min-height: 72px; outline: none; }
-  .feedback-textarea:focus { border-color: var(--brand-primary); }
-  .feedback-submit { margin-top: 8px; padding: 8px 22px; font-family: "Barlow", sans-serif; font-size: 12px; font-weight: 700; background: none; border: 1.5px solid var(--brand-primary); color: var(--brand-primary); border-radius: 5px; cursor: pointer; transition: all 0.15s; }
+  .feedback-submit { margin-top: 8px; padding: 8px 22px; font-family: "Barlow", sans-serif; font-size: 12px; font-weight: 700; background: none; border: 1.5px solid var(--brand-primary); color: var(--brand-primary); border-radius: 5px; cursor: pointer; }
   .feedback-submit:hover { background: var(--brand-primary); color: var(--white); }
 
   .powered-by { margin-top: 24px; text-align: center; padding-top: 18px; border-top: 1px solid #e0e0e0; font-size: 11px; color: #ccc; }
-
   @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
-  @media (max-width: 480px) { .card { padding: 20px 16px; } .trust-bar { gap: 14px; } .topbar { padding: 0 16px; } }
+  @media (max-width: 480px) { .card { padding: 20px 16px; } .trust-bar { gap: 14px; } .topbar { padding: 0 16px; } .status-banner { flex-direction: column; align-items: flex-start; } }
 </style>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6s7SOMNKYSG1TAHTnJsmLp41fcLo8xUk&v=weekly" async></script>
 </head>
 <body>
 
@@ -220,7 +211,7 @@
 <div class="hero">
   <div class="hero-eyebrow">Free 2-Minute Check</div>
   <h1>Is Your HVAC System<br/><em>Leaving You Out in the Heat?</em></h1>
-  <p>Answer a few quick questions about your system and get an honest picture of what it's costing you — and what the numbers actually mean for your decision.</p>
+  <p>Answer a few quick questions and get an honest, location-aware picture of what your system is really costing you — and what the numbers mean for your decision.</p>
 </div>
 
 <div class="trust-bar">
@@ -232,7 +223,6 @@
 
 <div class="main">
 
-  <!-- OPERATING STATUS -->
   <div class="status-banner" id="status-banner">
     <div class="status-left">
       <div class="status-icon" id="status-icon">🌡️</div>
@@ -247,28 +237,22 @@
     </div>
   </div>
 
-  <!-- CARD 01 -->
   <div class="card">
     <div class="card-title">01 — Your Home &amp; System</div>
 
-    <!-- UPDATE 1: CLIMATE REGION — first input -->
     <div class="field">
       <label>Your City &amp; State <small>e.g. Austin, TX</small></label>
-      <div style="position:relative;" id="city-input-wrapper">
-        <span id="search-icon" style="position:absolute; left:18px; top:50%; transform:translateY(-50%); font-size:18px; color:var(--ash); pointer-events:none;">🔍</span>
-        <input type="text" id="city-input" placeholder="Search your city & state..." autocomplete="off" style="
-          width:100%; padding:14px 48px 14px 48px;
-          border-radius:999px; border: 1.5px solid #e0e0e0;
-          background:var(--white); font-family:'Barlow',sans-serif;
-          font-size:15px; font-weight:600; color:var(--brand-text);
-          box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-          outline:none; transition: box-shadow 0.2s, border-color 0.2s;
-        " onfocus="this.style.boxShadow='0 4px 18px rgba(0,0,0,0.13)'; this.style.borderColor='#c0c0c0';"
-           onblur="this.style.boxShadow='0 2px 10px rgba(0,0,0,0.08)'; this.style.borderColor='#e0e0e0';"/>
-        <span id="city-clear" onclick="clearCity()" style="display:none; position:absolute; right:18px; top:50%; transform:translateY(-50%); font-size:16px; color:var(--ash); cursor:pointer; font-weight:700;">✕</span>
+      <div style="position:relative;">
+        <span id="search-icon" style="position:absolute;left:18px;top:50%;transform:translateY(-50%);font-size:18px;color:var(--ash);pointer-events:none;z-index:1;">🔍</span>
+        <input type="text" id="city-input" placeholder="Search your city & state..." autocomplete="off"
+          style="width:100%;padding:14px 48px;border-radius:999px;border:1.5px solid #e0e0e0;background:var(--white);font-family:'Barlow',sans-serif;font-size:15px;font-weight:600;color:var(--brand-text);box-shadow:0 2px 10px rgba(0,0,0,0.08);outline:none;transition:box-shadow 0.2s,border-color 0.2s;"
+          onfocus="this.style.boxShadow='0 4px 18px rgba(0,0,0,0.13)';this.style.borderColor='#c0c0c0';"
+          onblur="this.style.boxShadow='0 2px 10px rgba(0,0,0,0.08)';this.style.borderColor='#e0e0e0';setTimeout(hideDropdown,200);"/>
+        <span id="city-clear" style="display:none;position:absolute;right:18px;top:50%;transform:translateY(-50%);font-size:16px;color:var(--ash);cursor:pointer;font-weight:700;z-index:1;">✕</span>
+        <div id="city-dropdown" style="display:none;position:absolute;top:calc(100% + 6px);left:0;right:0;background:var(--white);border-radius:12px;box-shadow:0 4px 24px rgba(0,0,0,0.15);border:1.5px solid #e8e8e8;z-index:1000;overflow:hidden;"></div>
       </div>
-      <div id="city-confirm" style="display:none; margin-top:8px; padding:9px 14px; border-radius:6px; background:#f0faf4; border:1.5px solid rgba(39,174,96,0.3); font-size:12px; font-weight:700; color:#1e7e3e;">📍 <span id="city-confirm-text"></span></div>
-      <div class="helper" id="climate-helper">Enter your city and we'll automatically apply the right climate settings for your area.</div>
+      <div id="city-confirm" style="display:none;margin-top:8px;padding:9px 14px;border-radius:6px;background:#f0faf4;border:1.5px solid rgba(39,174,96,0.3);font-size:12px;font-weight:700;color:#1e7e3e;">📍 <span id="city-confirm-text"></span></div>
+      <div class="helper" id="climate-helper">Enter your city — we'll apply the correct IECC climate zone to your results automatically.</div>
     </div>
 
     <div class="field">
@@ -284,7 +268,7 @@
 
     <div class="field">
       <label>System Type</label>
-      <select id="system-type" onchange="updateSystemHelper()">
+      <select id="system-type">
         <option value="central">Central Air &amp; Heat</option>
         <option value="heatpump">Heat Pump</option>
         <option value="minisplit">Mini-Split</option>
@@ -296,14 +280,14 @@
 
     <div class="field">
       <label>How many units / zones? <small>Total count</small></label>
-      <input type="number" id="unit-count" min="1" max="50" placeholder="e.g. 1" value="1" oninput="updateUnitHelper()"/>
-      <div class="helper" id="unit-helper">A standard home has 1. Mini-splits or multi-zone systems may have 2–5 or more. Count each indoor unit or zone separately.</div>
+      <input type="number" id="unit-count" min="1" max="50" placeholder="e.g. 1" value="1"/>
+      <div class="helper">A standard home has 1. Mini-splits or multi-zone systems may have 2–5 or more.</div>
     </div>
 
     <div class="field">
       <label>How old is your system? <small>Best estimate</small></label>
       <div class="input-wrap has-suffix">
-        <input type="number" id="age" min="0" max="40" placeholder="e.g. 12" oninput="updateAgeDots()"/>
+        <input type="number" id="age" min="0" max="40" placeholder="e.g. 12"/>
         <span class="suffix">years</span>
       </div>
       <div class="age-visual" id="age-dots"></div>
@@ -313,7 +297,7 @@
     <div class="field">
       <label>Major repairs in the last 2 years?</label>
       <div class="slider-wrap">
-        <input type="range" id="repairs" min="0" max="8" step="1" value="0" oninput="sv('repairs-val', this.value); updateRepairHelper()"/>
+        <input type="range" id="repairs" min="0" max="8" step="1" value="0"/>
         <div class="slider-pill" id="repairs-val">0</div>
       </div>
       <div class="helper" id="repair-helper">No repairs — that's a good sign.</div>
@@ -321,7 +305,7 @@
 
     <div class="field">
       <label>Maintenance history</label>
-      <select id="maintenance" onchange="updateMaintHelper()">
+      <select id="maintenance">
         <option value="annual">Annual professional tune-up</option>
         <option value="sometimes">Occasional — every few years</option>
         <option value="never" selected>Never serviced</option>
@@ -330,7 +314,6 @@
     </div>
   </div>
 
-  <!-- CARD 02 -->
   <div class="card">
     <div class="card-title">02 — Performance &amp; Costs</div>
 
@@ -380,7 +363,6 @@
 
   <button class="calc-btn" onclick="calculate()">Show Me My Results →</button>
 
-  <!-- RESULTS -->
   <div class="results" id="results">
     <br/>
     <div class="verdict-banner replace" id="verdict-banner">
@@ -388,9 +370,9 @@
       <div class="verdict-label">Your HVAC Assessment</div>
       <div class="verdict-title" id="verdict-title">Loading...</div>
       <div class="verdict-desc" id="verdict-desc">Loading...</div>
+      <div class="zone-badge" id="zone-badge" style="display:none;"></div>
     </div>
 
-    <!-- UPDATE 4: MAINTENANCE TIPS — healthy verdict only -->
     <div class="tips-card" id="tips-card">
       <div class="tips-title">Two things to keep an eye on</div>
       <div id="tips-body"></div>
@@ -406,7 +388,7 @@
       <div class="output-card">
         <div class="output-icon">🔧</div>
         <div class="output-label">Recommendation</div>
-        <div class="output-value blue" id="out-rec">—</div>
+        <div class="output-value orange" id="out-rec">—</div>
         <div class="output-sub" id="out-rec-sub">based on your inputs</div>
       </div>
       <div class="output-card green-top">
@@ -417,58 +399,50 @@
       </div>
     </div>
 
-    <!-- UPDATE 5: HOW WE CALCULATE — transparency update -->
     <div class="how-we-calc">
       <button class="how-we-calc-toggle" onclick="toggleCalc()">🔍 How we calculated these numbers<span id="calc-arrow">▼ Show</span></button>
       <div class="how-we-calc-body" id="calc-body">
-
-        <div class="calc-step">
-          <div class="calc-step-label estimate">Conservative Estimate</div>
-          <div class="calc-step-title">Step 1 — Cost of a Non-Functioning System (Annual)</div>
-          <div class="calc-step-text">When a system is running but not conditioning air, homeowners incur real daily costs. We estimate a conservative floor of <strong>$900/year — approximately $75/month</strong> — covering temporary cooling or heating solutions, portable unit rentals, service call fees, and daily comfort disruption. This figure is intentionally conservative. Actual costs are typically higher depending on the number of people in the home, local temperatures, and whether hotel stays or extended rentals are involved. If your situation involves more than basic inconvenience, your real cost-of-waiting is likely several times this estimate.</div>
-          <div class="calc-step-formula">Operating Cost = $75/month × 12 = $900/year (applied only when system is not operating properly)</div>
-        </div>
-
         <div class="calc-step">
           <div class="calc-step-label cited">Cited Fact</div>
-          <div class="calc-step-title">Step 2 — Age-Related Efficiency Loss</div>
-          <div class="calc-step-text">Based on EPA and DOE HVAC performance data, systems lose approximately <strong>3–5% efficiency per year after year 8</strong>. We use a conservative 3.5% figure, capped at 40% total loss. Applied to the HVAC portion of your energy bill (estimated at 45% of total bill, per DOE residential energy data), scaled by home size and unit count, multiplied by 12 months.</div>
-          <div class="calc-step-formula">Efficiency Loss = (Age − 8) × 3.5% × sizeMultiplier — capped at 40%
-Annual Waste = Monthly Bill × 45% × Efficiency Loss × unitCount × 12</div>
+          <div class="calc-step-title">Step 1 — IECC Climate Zone Detection</div>
+          <div class="calc-step-text">Your city is mapped to an <strong>IECC (International Energy Conservation Code) climate zone</strong> — the same framework used by HVAC manufacturers, energy codes, and utility companies nationally. Eight zones based on heating and cooling degree-days. Zone 1 is South Florida (maximum cooling intensity). Zone 8 is Alaska. Your zone directly adjusts age thresholds, efficiency loss rates, repair cost multipliers, signal weights, and savings potential — because the same system in Phoenix and Minneapolis faces fundamentally different wear conditions.</div>
+          <div class="calc-step-formula" id="hwc-zone">Zone 4 (Mixed/Humid) — National average baseline</div>
         </div>
-
         <div class="calc-step">
           <div class="calc-step-label estimate">Conservative Estimate</div>
-          <div class="calc-step-title">Step 3 — Repair Costs</div>
-          <div class="calc-step-text">Each major repair is estimated at <strong>$400</strong> — a conservative average for significant HVAC service calls, based on HomeAdvisor and Angi industry data. Adjusted upward by maintenance history: systems that are never serviced accumulate more failure events. Scaled by unit count.</div>
-          <div class="calc-step-formula">Repair Cost = Repairs × $400 × maintFactor × unitCount</div>
+          <div class="calc-step-title">Step 2 — Cost of a Non-Functioning System</div>
+          <div class="calc-step-text">When a system isn't conditioning air, we apply a conservative floor of <strong>$900/year (~$75/month)</strong> covering temporary solutions and daily disruption costs. Actual costs are typically significantly higher.</div>
+          <div class="calc-step-formula">Operating Cost = $75/month × 12 = $900/year (applied when system is not operating properly)</div>
         </div>
-
-        <div class="calc-step">
-          <div class="calc-step-label estimate">Conservative Estimate</div>
-          <div class="calc-step-title">Step 4 — Performance Signal Surcharge</div>
-          <div class="calc-step-text">Each behavioral warning signal you flagged — rising bills, uneven temps, unusual operation — indicates efficiency loss beyond what age alone explains. We assign conservative annual cost figures to each: rising bills ($180), uneven temperatures ($240), constant running or noises ($360). These are floor estimates — actual impact varies.</div>
-          <div class="calc-step-formula">Signal Cost = (sig1 ? $180 : 0) + (sig2 ? $240 : 0) + (sig3 ? $360 : 0) per year</div>
-        </div>
-
         <div class="calc-step">
           <div class="calc-step-label cited">Cited Fact</div>
           <div class="calc-step-label regional" style="margin-left:6px;">Regional Note</div>
-          <div class="calc-step-title">Step 5 — Estimated Annual Savings</div>
-          <div class="calc-step-text">Based on ENERGY STAR replacement data, a new high-efficiency system typically reduces energy consumption by <strong>25–35%</strong>. We use a conservative 30% savings rate. Energy savings estimates are adjusted for your selected climate region based on average annual runtime differences across U.S. climate zones — sourced from EIA residential energy consumption survey data. Hot and arid climates see higher savings potential due to extended cooling seasons; mild climates see lower savings due to reduced runtime.</div>
-          <div class="calc-step-formula">Annual Savings = Monthly Bill × 30% × sizeMultiplier × unitCount × 12 × regionMultiplier</div>
+          <div class="calc-step-title">Step 3 — Zone-Adjusted Efficiency Loss & Age Thresholds</div>
+          <div class="calc-step-text">Based on EPA and DOE HVAC performance data, systems lose approximately <strong>3–5% efficiency per year after year 8</strong>. The exact rate and age thresholds vary by IECC zone. Hot/humid zones (1–2) see higher rates and flag systems earlier. Cold zones (6–7) have lower rates and longer useful lives. The age threshold triggering replacement urgency shifts from 12 years (Zone 1) to 20 years (Zone 8).</div>
+          <div class="calc-step-formula" id="hwc-efficiency">Zone 4: 3.5% efficiency loss/year after year 8. Replace threshold: age 15.</div>
         </div>
-
+        <div class="calc-step">
+          <div class="calc-step-label estimate">Conservative Estimate</div>
+          <div class="calc-step-label regional" style="margin-left:6px;">Regional Note</div>
+          <div class="calc-step-title">Step 4 — Zone-Adjusted Repair Costs & Signal Weights</div>
+          <div class="calc-step-text">Base repair cost per event: <strong>$400</strong> (HomeAdvisor/Angi average), adjusted by a zone repair multiplier. Hot/humid zones carry higher multipliers due to increased wear frequency. Performance signals are also zone-weighted — "system running constantly" is more urgent in hot zones (cooling failure in extreme heat); "uneven temperatures" is more urgent in cold zones (heating distribution failure in winter).</div>
+          <div class="calc-step-formula" id="hwc-signals">Zone 4 repair multiplier: 1.00×. Signal multiplier: 1.00×.</div>
+        </div>
+        <div class="calc-step">
+          <div class="calc-step-label cited">Cited Fact</div>
+          <div class="calc-step-label regional" style="margin-left:6px;">Regional Note</div>
+          <div class="calc-step-title">Step 5 — Zone-Adjusted Savings Estimate</div>
+          <div class="calc-step-text">Based on ENERGY STAR replacement data, a new high-efficiency system reduces energy use by <strong>25–35%</strong>. We use a conservative 30% baseline adjusted by a zone savings multiplier from EIA residential energy consumption survey data. Zone 1–2 homeowners see the highest returns (systems run the most hours). Zone 7–8 see lower overall savings multipliers but higher heating efficiency gains.</div>
+          <div class="calc-step-formula">Savings = Bill × 30% × sizeMult × unitCount × 12 × zoneSavingsMult</div>
+        </div>
         <div class="calc-step">
           <div class="calc-step-label standard">Industry Standard</div>
           <div class="calc-step-title">Step 6 — The Rule of $5,000</div>
-          <div class="calc-step-text">The Rule of $5,000 is a real heuristic used by HVAC professionals to evaluate repair vs. replace decisions. Multiply your system age by any repair quote. If the result exceeds <strong>$5,000</strong>, replacement is generally considered the more financially sound choice. This is not a guarantee — it is a widely used decision framework, not a precise financial calculation.</div>
-          <div class="calc-step-formula">Rule of $5,000 = System Age × Repair Quote
-Example: 14 yrs × $450 = $6,300 → Exceeds $5,000 → Replacement worth considering</div>
+          <div class="calc-step-text">A real heuristic used by HVAC professionals: multiply your system's age by any repair quote. If the result exceeds <strong>$5,000</strong>, replacement is generally the more financially sound choice. Widely used in the industry — not a guarantee, but a reliable decision framework.</div>
+          <div class="calc-step-formula">Rule of $5,000 = System Age (years) × Repair Quote → exceeds $5,000 → replacement favored</div>
         </div>
-
         <div class="sources">
-          📌 Efficiency loss rates based on EPA and DOE HVAC performance data. Repair cost averages sourced from HomeAdvisor and Angi industry reports (2024–2025). Energy savings estimates based on ENERGY STAR replacement data. Discomfort cost estimates are conservative floor figures — actual costs vary. Regional multipliers based on EIA residential energy consumption survey data by climate zone. All figures are estimates — actual results will vary based on your system, your market, and your specific circumstances. This tool is designed to help you ask better questions, not replace a professional assessment.
+          📌 IECC climate zone boundaries per International Energy Conservation Code (IECC 2021). Efficiency loss rates from EPA and DOE HVAC performance data. Repair averages from HomeAdvisor and Angi (2024–2025). Savings from ENERGY STAR replacement data. Zone multipliers from EIA residential energy consumption survey by climate zone. All figures are estimates — actual results vary by system, market, and circumstances. Designed to help you ask better questions, not replace a professional assessment.
         </div>
       </div>
     </div>
@@ -478,7 +452,7 @@ Example: 14 yrs × $450 = $6,300 → Exceeds $5,000 → Replacement worth consid
       <div id="breakdown-rows"></div>
     </div>
 
-    <div class="disclaimer"><strong>Heads up:</strong> These are estimates based on industry averages and your inputs — not guaranteed outcomes or quotes. Real results depend on your equipment brand, local climate, utility rates, and usage. This tool is designed to help you understand the opportunity and ask better questions, not promise a specific dollar figure.</div>
+    <div class="disclaimer"><strong>Heads up:</strong> These are estimates based on industry averages, your inputs, and your IECC climate zone — not guaranteed outcomes or quotes. Real results depend on your equipment brand, local utility rates, and usage. Designed to help you understand the opportunity and ask better questions, not promise a specific dollar figure.</div>
 
     <div class="rule-box">
       <div class="rule-icon">💡</div>
@@ -488,20 +462,17 @@ Example: 14 yrs × $450 = $6,300 → Exceeds $5,000 → Replacement worth consid
       </div>
     </div>
 
-    <!-- UPDATE 3: CTA PER VERDICT -->
     <div class="cta-card">
-      <h3 id="cta-h">Want Your Own Custom Branded Calculator for Your Business?</h3>
-      <p id="cta-p">This tool was built by Flint. We create custom branded calculators for local service businesses that qualify leads, build trust, and drive calls — before a customer ever picks up the phone.</p>
+      <h3 id="cta-h">Want a Second Opinion Before You Decide?</h3>
+      <p id="cta-p">Flint connects homeowners with honest assessments — no pressure, no upsell.</p>
       <a class="cta-btn" id="cta-btn" href="https://calendly.com/admin-flinttool/30min" target="_blank">Get a Free Second Opinion →</a>
       <div class="cta-disclaimer">Free assessment. No obligation.</div>
     </div>
 
-    <!-- Secondary Calendly link — healthy verdict only -->
     <div class="secondary-link" id="secondary-link" style="display:none;">
       Want a professional to verify these results? <a href="https://calendly.com/admin-flinttool/30min" target="_blank">Book a free call.</a>
     </div>
 
-    <!-- UPDATE 6: FEEDBACK MECHANISM -->
     <div class="feedback-wrap" id="feedback-wrap">
       <div class="feedback-question" id="feedback-question">Was this assessment helpful?</div>
       <div class="feedback-btns" id="feedback-btns">
@@ -509,8 +480,7 @@ Example: 14 yrs × $450 = $6,300 → Exceeds $5,000 → Replacement worth consid
         <button class="feedback-btn" onclick="feedbackNo()">Not really</button>
       </div>
     </div>
-
-  </div><!-- /results -->
+  </div>
 
   <div class="powered-by">flinttool.com · Turn your website into a sales tool · Veteran Owned</div>
 </div>
@@ -520,101 +490,236 @@ Example: 14 yrs × $450 = $6,300 → Exceeds $5,000 → Replacement worth consid
 const signals = { 1: true, 2: true, 3: true };
 let systemOperating = true;
 let hasCalculated = false;
-let climateRegion = "hot_humid";
+let currentZone = 4;
+let currentZoneSub = "A";
+let currentZoneLabel = "IECC Zone 4A — Mixed/Humid";
 
-// Regional savings multipliers — applied to annualSavings only
-const REGION_MULT = {
-  hot_arid:  1.15,
-  hot_humid: 1.10,
-  mixed:     1.0,
-  mild:      0.85,
-  cold:      1.05,
+// ══════════════════════════════════════════════════════
+// FLINT CLIMATE — Shared Climate Intelligence Layer v1
+// Maps lat/lng → IECC climate zone (1–8) + subzone
+// Used by all Flint calculators. Each industry applies
+// its own scoring logic to the returned zone data.
+// ══════════════════════════════════════════════════════
+const FlintClimate = {
+  detect: function(lat, lng) {
+    // Alaska
+    if (lat >= 60) return { zone: 8, sub: "A", label: "IECC Zone 8 — Subarctic" };
+    // Hawaii
+    if (lat < 22 && lng < -150) return { zone: 1, sub: "A", label: "IECC Zone 1A — Very Hot/Humid" };
+    // Pacific Coast — Marine subzones
+    if (lng <= -120 && lat >= 32 && lat < 34)  return { zone: 3, sub: "B", label: "IECC Zone 3B — Warm/Dry (SoCal)" };
+    if (lng <= -118 && lat >= 34 && lat < 36)  return { zone: 3, sub: "B", label: "IECC Zone 3B — Warm/Dry (SoCal)" };
+    if (lng <= -120 && lat >= 36 && lat < 38)  return { zone: 3, sub: "C", label: "IECC Zone 3C — Warm/Marine (Central CA)" };
+    if (lng <= -121 && lat >= 38 && lat < 42)  return { zone: 4, sub: "C", label: "IECC Zone 4C — Mixed/Marine (N. CA Coast)" };
+    if (lng <= -122 && lat >= 42 && lat < 46)  return { zone: 4, sub: "C", label: "IECC Zone 4C — Mixed/Marine (OR Coast)" };
+    if (lng <= -122 && lat >= 46 && lat < 49)  return { zone: 5, sub: "C", label: "IECC Zone 5C — Cool/Marine (WA Coast)" };
+    // Hot Arid — Desert SW interior
+    if (lat >= 31 && lat < 35 && lng >= -115 && lng < -104) return { zone: 2, sub: "B", label: "IECC Zone 2B — Hot/Dry (Desert SW)" };
+    if (lat >= 35 && lat < 38 && lng >= -117 && lng < -109) return { zone: 3, sub: "B", label: "IECC Zone 3B — Warm/Dry (Great Basin)" };
+    if (lat >= 38 && lat < 42 && lng >= -117 && lng < -111) return { zone: 4, sub: "B", label: "IECC Zone 4B — Mixed/Dry (Intermountain)" };
+    if (lat >= 42 && lat < 47 && lng >= -117 && lng < -111) return { zone: 5, sub: "B", label: "IECC Zone 5B — Cool/Dry (N. Rockies)" };
+    if (lat >= 47 && lng >= -117 && lng < -111)             return { zone: 6, sub: "B", label: "IECC Zone 6B — Cold/Dry (N. Rockies)" };
+    // Semi-arid High Plains
+    if (lat >= 35 && lat < 41 && lng >= -105 && lng < -100) return { zone: 4, sub: "B", label: "IECC Zone 4B — Mixed/Dry (High Plains)" };
+    if (lat >= 41 && lat < 46 && lng >= -105 && lng < -98)  return { zone: 5, sub: "B", label: "IECC Zone 5B — Cool/Dry (N. Plains)" };
+    // Zone 1A — Very Hot/Humid: South FL
+    if (lat < 27.5 && lng > -82.5) return { zone: 1, sub: "A", label: "IECC Zone 1A — Very Hot/Humid (S. FL)" };
+    // Zone 2A — Hot/Humid: Gulf Coast TX, LA, MS, AL, FL panhandle
+    if (lat >= 27.5 && lat < 30 && lng >= -98 && lng <= -80) return { zone: 2, sub: "A", label: "IECC Zone 2A — Hot/Humid (Gulf Coast)" };
+    if (lat >= 30   && lat < 31 && lng >= -98 && lng <= -85) return { zone: 2, sub: "A", label: "IECC Zone 2A — Hot/Humid (Gulf Coast)" };
+    if (lat >= 27.5 && lat < 31 && lng > -85  && lng <= -80) return { zone: 2, sub: "A", label: "IECC Zone 2A — Hot/Humid (FL Panhandle)" };
+    // Zone 3A — Warm/Humid: TX interior, OK, AR, TN, SE
+    if (lat >= 31 && lat < 35.5 && lng >= -101 && lng <= -80) return { zone: 3, sub: "A", label: "IECC Zone 3A — Warm/Humid (South-Central)" };
+    if (lat >= 35.5 && lat < 37 && lng >= -93  && lng <= -78) return { zone: 3, sub: "A", label: "IECC Zone 3A — Warm/Humid (Mid-South)" };
+    // Zone 4A — Mixed/Humid: Mid-Atlantic, Border South, lower Midwest
+    if (lat >= 35 && lat < 37 && lng >= -101 && lng < -93)   return { zone: 4, sub: "A", label: "IECC Zone 4A — Mixed/Humid (S. Midwest)" };
+    if (lat >= 37 && lat < 40 && lng >= -98  && lng <= -74)   return { zone: 4, sub: "A", label: "IECC Zone 4A — Mixed/Humid (Mid-Atlantic)" };
+    if (lat >= 40 && lat < 42 && lng >= -78  && lng <= -74)   return { zone: 4, sub: "A", label: "IECC Zone 4A — Mixed/Humid (Mid-Atlantic)" };
+    // Zone 5A — Cool/Humid: Great Lakes, Upper Midwest, NE
+    if (lat >= 40 && lat < 45 && lng >= -98  && lng <= -73)   return { zone: 5, sub: "A", label: "IECC Zone 5A — Cool/Humid (Great Lakes)" };
+    if (lat >= 37 && lat < 40 && lng > -74   && lng <= -70)   return { zone: 5, sub: "A", label: "IECC Zone 5A — Cool/Humid (New England)" };
+    if (lat >= 40 && lat < 45 && lng > -74   && lng <= -66)   return { zone: 5, sub: "A", label: "IECC Zone 5A — Cool/Humid (New England)" };
+    // Zone 6A — Cold/Humid: MN, WI, MI, N. New England
+    if (lat >= 45 && lat < 49 && lng >= -97  && lng <= -83)   return { zone: 6, sub: "A", label: "IECC Zone 6A — Cold/Humid (Upper Midwest)" };
+    if (lat >= 45 && lat <= 48 && lng > -74  && lng <= -66)   return { zone: 6, sub: "A", label: "IECC Zone 6A — Cold/Humid (N. New England)" };
+    // Zone 7 — Very Cold
+    if (lat >= 49 && lat < 60) return { zone: 7, sub: "A", label: "IECC Zone 7 — Very Cold" };
+    // Default fallback
+    return { zone: 4, sub: "A", label: "IECC Zone 4A — Mixed/Humid" };
+  }
 };
 
-const REGION_HELPERS = {
-  hot_arid:  "Extreme heat means your system runs significantly more hours per year than average — and a more efficient system saves proportionally more. Dry conditions also accelerate wear on certain components.",
-  hot_humid: "Your climate affects how hard your system works and how much you stand to save with a more efficient one. Hot, humid climates like Central Texas see some of the highest HVAC runtime hours in the country.",
-  mixed:     "Mixed climates use both heating and cooling significantly. Your savings potential is close to the national average — efficiency upgrades pay off steadily over time.",
-  mild:      "Moderate temperatures mean lower system runtime overall. Efficiency upgrades still matter, but the annual savings potential is lower than in more extreme climates.",
-  cold:      "Heating load in cold climates is significant. A well-matched system with proper maintenance can meaningfully reduce your heating costs through the long winter months.",
+// ── HVAC ZONE DATA — zone-specific scoring parameters ──
+const ZONE_HVAC = {
+  1: { ageReplace:12, ageCaution:8,  effRate:0.050, maintPenalty:1.45, repairMult:1.20, savingsMult:1.20, sigMult:1.15,
+       label:"Very Hot / Humid",
+       note:"Zone 1 systems run nearly year-round. Efficiency upgrades deliver the highest returns of any US climate zone — and maintenance neglect compounds faster here than anywhere else." },
+  2: { ageReplace:13, ageCaution:9,  effRate:0.045, maintPenalty:1.35, repairMult:1.15, savingsMult:1.15, sigMult:1.10,
+       label:"Hot",
+       note:"Central Texas, Gulf Coast, and Desert Southwest. High cooling demand means efficiency loss adds up fast — especially in humid subzones where drain lines and coils need annual attention." },
+  3: { ageReplace:14, ageCaution:10, effRate:0.040, maintPenalty:1.25, repairMult:1.10, savingsMult:1.10, sigMult:1.05,
+       label:"Warm",
+       note:"Warm climates still run heavy cooling seasons. A system past its prime will show up in your energy bill every summer — catching it early is almost always the cheaper path." },
+  4: { ageReplace:15, ageCaution:10, effRate:0.035, maintPenalty:1.20, repairMult:1.00, savingsMult:1.00, sigMult:1.00,
+       label:"Mixed",
+       note:"Mixed climates use both heating and cooling significantly. This is the national average baseline — your system faces balanced seasonal demand throughout the year." },
+  5: { ageReplace:16, ageCaution:11, effRate:0.032, maintPenalty:1.15, repairMult:0.95, savingsMult:0.95, sigMult:0.95,
+       label:"Cool",
+       note:"Cooler climates put less stress on AC but significant stress on heating. Furnace components and heat exchangers deserve close attention here more than cooling efficiency." },
+  6: { ageReplace:17, ageCaution:12, effRate:0.030, maintPenalty:1.15, repairMult:0.90, savingsMult:0.90, sigMult:0.90,
+       label:"Cold",
+       note:"Cold climates are dominated by heating load. Heating efficiency and heat exchanger condition are the primary financial concerns — a failing furnace in winter carries real urgency." },
+  7: { ageReplace:18, ageCaution:13, effRate:0.028, maintPenalty:1.20, repairMult:0.85, savingsMult:0.85, sigMult:0.95,
+       label:"Very Cold",
+       note:"Very cold climates are almost entirely about heating load. Heating system age and efficiency matter far more than cooling performance — prioritize heating components above all." },
+  8: { ageReplace:20, ageCaution:14, effRate:0.025, maintPenalty:1.30, repairMult:1.30, savingsMult:0.80, sigMult:1.00,
+       label:"Subarctic",
+       note:"Subarctic climates are 100% heating focused. Parts access and service availability carry a cost premium here — preventive maintenance is more financially critical than in any other zone." },
 };
 
-// Replacement costs per unit by system type
 const REPLACE_COST = {
-  central:   { low: 5000,  high: 12000, label: "Central Air & Heat" },
-  heatpump:  { low: 4200,  high: 12000, label: "Heat Pump" },
-  minisplit: { low: 2000,  high: 5000,  label: "Mini-Split (per zone)" },
-  furnace:   { low: 1700,  high: 7000,  label: "Furnace Only" },
-  window:    { low: 300,   high: 800,   label: "Window / Portable Unit" },
+  central:   { low:5000,  high:12000, label:"Central Air & Heat" },
+  heatpump:  { low:4200,  high:12000, label:"Heat Pump" },
+  minisplit: { low:2000,  high:5000,  label:"Mini-Split" },
+  furnace:   { low:1700,  high:7000,  label:"Furnace Only" },
+  window:    { low:300,   high:800,   label:"Window / Portable Unit" },
 };
 
-const SYSTEM_HELPERS = {
-  central:   "Most common whole-home system. Avg. replacement cost: $5,000–$12,000 per unit.",
-  heatpump:  "Energy-efficient heating and cooling combined. Avg. replacement cost: $4,200–$12,000.",
-  minisplit: "Ductless zone-based system. Avg. replacement cost: $2,000–$5,000 per zone/unit.",
-  furnace:   "Heating only — typically paired with separate AC. Avg. replacement cost: $1,700–$7,000.",
-  window:    "Single-room units. Lower replacement cost: $300–$800 per unit.",
-};
-
-// UPDATE 4: TIPS LIBRARY
+// ── TIPS LIBRARY — zone-specific maintenance tips ──
 const TIPS = {
-  under5: {
-    any:      "Change your air filter every 60–90 days. A clogged filter forces your system to work harder and is the single most common cause of early efficiency loss in newer systems.",
-    hot_arid: "In high-heat climates your system runs significantly more hours per year than average. Schedule a coil cleaning once a year — heat and dust buildup reduce efficiency faster here than in milder climates.",
-    hot_humid:"In high-heat climates your system runs significantly more hours per year than average. Schedule a coil cleaning once a year — heat and dust buildup reduce efficiency faster here than in milder climates.",
-    cold:     "Before heating season, have your heat exchanger inspected. Cracks in the heat exchanger are the most common — and most dangerous — issue in furnace-based systems, and they are easy to miss without a professional check.",
-    mild:     "Your moderate climate means lower system stress overall. Focus on keeping the outdoor unit clear of debris and changing filters regularly — basic maintenance will keep a newer system running efficiently for years.",
-    mixed:    "Your moderate climate means lower system stress overall. Focus on keeping the outdoor unit clear of debris and changing filters regularly — basic maintenance will keep a newer system running efficiently for years.",
-  },
-  mid: {
-    hot_arid:  "In dry climates, refrigerant lines and seals dry out faster than average. If you notice your system cycling more frequently or your bills creeping up, a refrigerant check is a reasonable preventive step at this age.",
-    hot_humid: "Humidity accelerates drain line buildup. Check and flush your condensate drain line once a year — a clogged drain line is one of the most common causes of water damage from HVAC systems in Gulf Coast and Southeast climates.",
-    mixed:     "At this age your system is in its most efficient years. Keep up with annual professional tune-ups — catching small issues now prevents the repair bills that show up between years 10 and 15.",
-    mild:      "At this age your system is in its most efficient years. Keep up with annual professional tune-ups — catching small issues now prevents the repair bills that show up between years 10 and 15.",
-    cold:      "Your heating system works hardest in these years. Make sure air ducts are sealed and insulated — up to 30 percent of heating energy is lost through leaky ducts in older northern-climate homes.",
-  },
-  over10: {
-    hot_arid:  "Systems over 10 years old in hot, dry climates often have worn capacitors and contactors — inexpensive parts that fail without warning and shut the system down entirely, usually on the hottest day of the year. Ask your technician to inspect these proactively.",
-    hot_humid: "At this age in a humid climate, check your evaporator coil for mold or ice buildup. High humidity accelerates both — either reduces your air quality and your system efficiency significantly.",
-    mixed:     "The Rule of $5,000 becomes relevant at this age: multiply your system age by any repair quote you receive. If the result exceeds $5,000, replacement typically makes more financial sense than a repair. Keep that number in mind before authorizing any service work.",
-    cold:      "Older systems in cold climates work harder and wear faster than average. If your heating bills have increased without a rate change, ask a technician to measure your system efficiency — a tune-up or minor repair can sometimes recover 10–15 percent of lost efficiency.",
-    mild:      "In mild climates systems over 10 years old often outlast national averages. Focus on maintaining refrigerant levels and keeping outdoor units clear — your system likely has more life left than average if it has been serviced regularly.",
-  },
+  1: ["Your Zone 1 climate means your system runs more hours annually than almost anywhere in the US. Coil cleaning once a year is not optional here — humidity and heat together accelerate efficiency loss significantly faster than routine aging alone.",
+      "Check and flush your condensate drain line every 6 months. In high-humidity Zone 1 climates, clogged drain lines are one of the most common — and most avoidable — causes of interior water damage from HVAC systems."],
+  "2A":["Humidity accelerates drain line buildup. Flush your condensate drain line annually — a clogged line is one of the most common causes of water damage from HVAC systems in Gulf Coast and Southeast climates.",
+        "At this age in a hot/humid climate, have your evaporator coil inspected for mold or ice buildup. High humidity accelerates both — either condition reduces air quality and system efficiency significantly."],
+  "2B":["In dry climates, refrigerant lines and seals degrade faster than the national average. If your system cycles more frequently or bills are creeping up, a refrigerant check is a smart preventive step at this age.",
+        "Dust buildup on condenser coils is the primary efficiency killer in arid Zone 2 climates. Annual coil cleaning pays for itself in energy savings within the first cooling season."],
+  3:  ["At this age your system is approaching the years when small issues become expensive ones. Annual professional tune-ups now prevent the repair bills that typically show up between years 10 and 15.",
+       "Change your air filter every 60–90 days. In warm climates where your system runs most of the year, filter neglect is the single most common and most preventable cause of early efficiency loss."],
+  4:  ["Mixed climates use both heating and cooling significantly. Schedule your tune-up in fall before heating season — technicians have more availability and you avoid the rush of emergency calls in peak season.",
+       "Make sure air ducts are sealed properly — up to 20% of conditioned air can be lost through leaky ducts, hitting both your heating and cooling bills equally."],
+  5:  ["In cool climates, your heating system works harder than your cooling system. Have your heat exchanger inspected annually — cracks are the most dangerous and most commonly missed issue in gas furnace systems.",
+       "Seal and insulate your air ducts if you haven't recently — up to 30% of heating energy is lost through leaky ducts in cool-climate homes, and it compounds significantly over a long heating season."],
+  6:  ["Cold Zone 6 climates put serious strain on heating systems. If your heating bills have increased without a utility rate change, ask a technician to measure your system efficiency — a tune-up can sometimes recover 10–15% of lost efficiency.",
+       "Before heating season, verify your thermostat is calibrated correctly. A miscalibrated thermostat in Zone 6 forces longer cycles unnecessarily, adding real cost every month of a long winter."],
+  7:  ["Very cold Zone 7 climates are almost entirely about heating load. Prioritize annual inspection of heating components, heat exchanger, and fuel delivery system — your cooling system is secondary.",
+       "Older systems in Zone 7 wear heating components faster than national averages. A combustion analysis every 2 years is a worthwhile investment before heating season begins."],
+  8:  ["In subarctic Zone 8 climates, parts access and service availability carry a real premium. Preventive maintenance is more financially important here than anywhere else — emergency service can be expensive and slow to arrive.",
+       "Your system operates under extreme heating load conditions. Annual professional inspection is critical — catching a failing component before total failure is especially important when emergency service is limited."],
 };
 
-function getTips(age, maint, region) {
+function getTips(age, maint, zone, sub) {
   const tips = [];
-  // Rule 1: maintenance gap always gets filter/service tip first
+  // Maintenance gap always gets the filter tip first
   if (maint === "never" || maint === "sometimes") {
-    tips.push("Change your air filter every 60–90 days and schedule a professional tune-up if you haven't had one in the last 2 years. Dirty filters and uncleaned coils are the most common — and most preventable — causes of efficiency loss and early system failure.");
+    tips.push("Change your air filter every 60–90 days and schedule a professional tune-up if you haven't had one in the last 2 years. Dirty filters and uncleaned coils are the most common preventable cause of efficiency loss and early failure.");
   }
-  // Rule 2: age over 10 gets efficiency check tip
-  if (age > 10 && tips.length < 2) {
-    const tip = TIPS.over10[region] || TIPS.over10.mixed;
-    if (!tips.includes(tip)) tips.push(tip);
-  }
-  // Rule 3: age under 5
-  if (age <= 5 && tips.length < 2) {
-    const tip = TIPS.under5[region] || TIPS.under5.any;
-    if (!tips.includes(tip)) tips.push(tip);
-  }
-  // Rule 4: age 5-10
-  if (age > 5 && age <= 10 && tips.length < 2) {
-    const tip = TIPS.mid[region] || TIPS.mid.mixed;
-    if (!tips.includes(tip)) tips.push(tip);
-  }
-  // Fill second slot with regional tip if not already 2
-  if (tips.length < 2) {
-    let regionTip;
-    if (age > 10)       regionTip = TIPS.over10[region] || TIPS.over10.mixed;
-    else if (age <= 5)  regionTip = TIPS.under5[region] || TIPS.under5.any;
-    else                regionTip = TIPS.mid[region] || TIPS.mid.mixed;
-    if (!tips.includes(regionTip)) tips.push(regionTip);
+  // Pull zone-specific tips
+  const key = zone === 2 ? "2" + sub : zone;
+  const pool = TIPS[key] || TIPS[4];
+  for (const t of pool) {
+    if (tips.length < 2 && !tips.includes(t)) tips.push(t);
   }
   return tips.slice(0, 2);
 }
 
-function sv(id, val) { document.getElementById(id).textContent = val; }
+// ── NOMINATIM AUTOCOMPLETE ──
+let debounceTimer = null;
+let activeIdx = -1;
+let suggestions = [];
+
+function onCityInput() {
+  const val = document.getElementById("city-input").value.trim();
+  document.getElementById("city-clear").style.display = val.length > 0 ? "block" : "none";
+  document.getElementById("city-confirm").style.display = "none";
+  clearTimeout(debounceTimer);
+  if (val.length < 2) { hideDropdown(); return; }
+  debounceTimer = setTimeout(function() { fetchSuggestions(val); }, 300);
+}
+
+function onCityKeydown(e) {
+  const items = document.querySelectorAll(".city-opt");
+  if (e.key === "ArrowDown") { e.preventDefault(); activeIdx = Math.min(activeIdx + 1, items.length - 1); highlightItems(items); }
+  else if (e.key === "ArrowUp") { e.preventDefault(); activeIdx = Math.max(activeIdx - 1, 0); highlightItems(items); }
+  else if (e.key === "Enter") { e.preventDefault(); if (activeIdx >= 0 && suggestions[activeIdx]) selectCity(suggestions[activeIdx]); else if (suggestions.length > 0) selectCity(suggestions[0]); }
+  else if (e.key === "Escape") hideDropdown();
+}
+
+function highlightItems(items) {
+  items.forEach(function(el, i) {
+    el.style.background = i === activeIdx ? "#fff8f0" : "";
+    el.style.color = i === activeIdx ? "var(--brand-primary)" : "";
+  });
+}
+
+function fetchSuggestions(q) {
+  var url = "https://nominatim.openstreetmap.org/search?q=" + encodeURIComponent(q) + "&format=json&limit=6&addressdetails=1&countrycodes=us";
+  fetch(url, { headers: { "Accept-Language": "en" } })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      suggestions = [];
+      var seen = {};
+      for (var i = 0; i < data.length; i++) {
+        var x = data[i];
+        var ok = ["city","town","village","county","suburb","municipality","hamlet"].indexOf(x.addresstype) >= 0 || x.class === "place";
+        if (!ok) continue;
+        var city = x.address.city || x.address.town || x.address.village || x.address.hamlet || x.address.county || x.name;
+        var state = x.address.state || "";
+        var label = city + (state ? ", " + state : "");
+        if (seen[label]) continue;
+        seen[label] = true;
+        suggestions.push({ label: label, lat: parseFloat(x.lat), lng: parseFloat(x.lon) });
+        if (suggestions.length >= 5) break;
+      }
+      renderDropdown();
+    })
+    .catch(function() { hideDropdown(); });
+}
+
+function renderDropdown() {
+  var dd = document.getElementById("city-dropdown");
+  activeIdx = -1;
+  if (!suggestions.length) { dd.style.display = "none"; return; }
+  var html = "";
+  for (var i = 0; i < suggestions.length; i++) {
+    html += '<div class="city-opt" data-i="' + i + '" style="padding:12px 18px;cursor:pointer;font-family:Barlow,sans-serif;font-size:14px;font-weight:600;color:var(--brand-text);border-bottom:1px solid #f4f4f4;display:flex;align-items:center;gap:10px;" onmouseover="this.style.background=\'#fff8f0\';this.style.color=\'var(--brand-primary)\'" onmouseout="this.style.background=\'\';this.style.color=\'\'" onmousedown="selectCity(suggestions[' + i + '])"><span>📍</span>' + suggestions[i].label + '</div>';
+  }
+  dd.innerHTML = html;
+  var last = dd.lastElementChild;
+  if (last) last.style.borderBottom = "none";
+  dd.style.display = "block";
+}
+
+function hideDropdown() {
+  var dd = document.getElementById("city-dropdown");
+  if (dd) dd.style.display = "none";
+}
+
+function selectCity(s) {
+  document.getElementById("city-input").value = s.label;
+  document.getElementById("city-clear").style.display = "block";
+  hideDropdown();
+  var detected = FlintClimate.detect(s.lat, s.lng);
+  currentZone = detected.zone;
+  currentZoneSub = detected.sub;
+  currentZoneLabel = detected.label;
+  document.getElementById("city-confirm").style.display = "block";
+  document.getElementById("city-confirm-text").textContent = s.label + " → " + detected.label;
+  document.getElementById("climate-helper").textContent = ZONE_HVAC[currentZone].note;
+  liveUpdate();
+}
+
+function clearCity() {
+  document.getElementById("city-input").value = "";
+  document.getElementById("city-clear").style.display = "none";
+  document.getElementById("city-confirm").style.display = "none";
+  hideDropdown();
+  document.getElementById("climate-helper").textContent = "Enter your city — we'll apply the correct IECC climate zone to your results automatically.";
+  currentZone = 4; currentZoneSub = "A"; currentZoneLabel = "IECC Zone 4A — Mixed/Humid"; suggestions = [];
+  liveUpdate();
+}
+
+// ── UI ──
+function sv(id, v) { var el = document.getElementById(id); if (el) el.textContent = v; }
 function fmt(n) { return "$" + Math.round(Math.abs(n)).toLocaleString(); }
 
 function setStatus(val) {
@@ -626,112 +731,253 @@ function setStatus(val) {
   liveUpdate();
 }
 
-function setSignal(num, val) {
-  signals[num] = val;
-  document.getElementById("sig"+num+"-yes").className = "toggle-btn" + (val  ? " active-yes" : "");
-  document.getElementById("sig"+num+"-no" ).className = "toggle-btn" + (!val ? " active-no"  : "");
+function setSignal(n, val) {
+  signals[n] = val;
+  document.getElementById("sig"+n+"-yes").className = "toggle-btn" + (val  ? " active-yes" : "");
+  document.getElementById("sig"+n+"-no" ).className = "toggle-btn" + (!val ? " active-no"  : "");
   liveUpdate();
 }
 
-const REGION_LABELS = {
-  hot_arid:  "Hot & Dry",
-  hot_humid: "Hot & Humid",
-  mixed:     "Mixed Climate",
-  mild:      "Mild / Coastal",
-  cold:      "Cold / Northern",
-};
+function updateAgeDots() {
+  var age = parseInt(document.getElementById("age").value) || 0;
+  var zd = ZONE_HVAC[currentZone];
+  var container = document.getElementById("age-dots");
+  var helper = document.getElementById("age-helper");
+  var max = 20; var dots = "";
+  for (var i = 1; i <= Math.min(age, max); i++) {
+    var cls = i < zd.ageCaution ? "filled" : i < zd.ageReplace ? "warning" : "danger";
+    dots += '<div class="age-dot ' + cls + '">' + i + '</div>';
+  }
+  if (age > max) dots += '<div class="age-dot danger">+</div>';
+  container.innerHTML = dots;
+  if (!age) { helper.textContent = "Most HVAC systems last 15–20 years. Efficiency drops significantly after year 10."; return; }
+  if (age < zd.ageCaution)   helper.textContent = "✅ Relatively new for your climate zone — should have years of efficient service ahead.";
+  else if (age < zd.ageReplace) helper.textContent = "⚠️ Approaching the typical threshold for " + zd.label + " climates. Worth monitoring closely.";
+  else                        helper.textContent = "🚨 Past the replacement threshold for " + zd.label + " climates. Replacement may be overdue.";
+  liveUpdate();
+}
 
-// ── GOOGLE PLACES AUTOCOMPLETE (New API — post March 2025) ──
-async function initAutocompletAsync() {
-  // Request needed libraries using the new importLibrary pattern
-  await google.maps.importLibrary("places");
+function updateRepairHelper() {
+  var r = parseInt(document.getElementById("repairs").value) || 0;
+  sv("repairs-val", r);
+  var h = document.getElementById("repair-helper");
+  if (r === 0)      h.textContent = "No repairs — that's a good sign.";
+  else if (r === 1) h.textContent = "One repair is normal. Keep monitoring.";
+  else if (r === 2) h.textContent = "⚠️ Two repairs in two years is a yellow flag worth paying attention to.";
+  else              h.textContent = "🚨 Multiple repairs signal a system that may be reaching end of cost-effective life.";
+  liveUpdate();
+}
 
-  const placeAutocomplete = new google.maps.places.PlaceAutocompleteElement({
-    componentRestrictions: { country: "us" },
-    types: ["(cities)"],
-  });
+function updateMaintHelper() {
+  var m = document.getElementById("maintenance").value;
+  var h = document.getElementById("maint-helper");
+  if (m === "annual")         h.textContent = "Great — regular tune-ups protect efficiency and extend system life.";
+  else if (m === "sometimes") h.textContent = "Occasional service helps, but gaps let efficiency drift over time.";
+  else                        h.textContent = "Systems that are never serviced lose efficiency faster and fail sooner.";
+  liveUpdate();
+}
 
-  placeAutocomplete.style.cssText = "width:100%;";
+function brow(label, val, cls, isSignal) {
+  return '<div class="b-row' + (isSignal ? " signal-warn" : "") + '"><span class="b-label">' + label + '</span><span class="b-val ' + (cls||"") + '">' + val + '</span></div>';
+}
 
-  const wrapper = document.getElementById("city-input-wrapper");
-  const oldInput = document.getElementById("city-input");
-  const searchIcon = document.getElementById("search-icon");
-  const clearBtn = document.getElementById("city-clear");
+// ── CALCULATE ──
+function calculate() {
+  var zd        = ZONE_HVAC[currentZone];
+  var sizeMult  = parseFloat(document.getElementById("home-size").value);
+  var sysType   = document.getElementById("system-type").value;
+  var unitCount = Math.max(1, parseInt(document.getElementById("unit-count").value) || 1);
+  var age       = Math.round(parseFloat(document.getElementById("age").value) || 0);
+  var repairs   = Math.round(parseFloat(document.getElementById("repairs").value) || 0);
+  var maint     = document.getElementById("maintenance").value;
+  var bill      = Math.round(parseFloat(document.getElementById("energy-bill").value) || 0);
+  var repairQ   = Math.round(parseFloat(document.getElementById("repair-quote").value) || 0);
+  var sig1 = signals[1], sig2 = signals[2], sig3 = signals[3];
 
-  wrapper.insertBefore(placeAutocomplete, oldInput);
-  oldInput.style.display = "none";
-  searchIcon.style.display = "none";
+  if (!age)  { document.getElementById("age").classList.add("error");         document.getElementById("age").scrollIntoView({behavior:"smooth",block:"center"}); return; }
+  if (!bill) { document.getElementById("energy-bill").classList.add("error"); document.getElementById("energy-bill").scrollIntoView({behavior:"smooth",block:"center"}); return; }
+  document.getElementById("age").classList.remove("error");
+  document.getElementById("energy-bill").classList.remove("error");
 
-  placeAutocomplete.addEventListener("gmp-select", async ({ placePrediction }) => {
-    const place = placePrediction.toPlace();
-    await place.fetchFields({ fields: ["displayName", "formattedAddress", "location"] });
+  var maintFactor = maint === "annual" ? 1.0 : maint === "sometimes" ? 1.15 : 1.30;
+  var maintScore  = maint === "annual" ? 0   : maint === "sometimes" ? 1    : 2;
 
-    const lat = place.location.lat();
-    const lng = place.location.lng();
-    climateRegion = coordsToRegion(lat, lng);
+  // NAMED URGENCY SCORE — zone-adjusted
+  var operatingScore = systemOperating ? 0 : 3;
+  var ageScore       = age >= zd.ageReplace ? 3 : age >= zd.ageCaution ? 2 : age > 5 ? 1 : 0;
+  var repairScore    = repairs >= 3 ? 3 : repairs >= 2 ? 2 : repairs >= 1 ? 1 : 0;
+  var ruleOf5k       = age * repairQ;
+  var ruleScore      = ruleOf5k > 5000 ? 3 : ruleOf5k > 3000 ? 2 : 0;
+  // Zone-weighted signal scores
+  var sig1w = 1;
+  var sig2w = currentZone >= 5 ? 2 : 1; // uneven temps = heating distribution → more critical in cold zones
+  var sig3w = currentZone <= 3 ? 2 : 1; // running constantly = cooling failure → more critical in hot zones
+  var perfScore = (sig1 ? sig1w : 0) + (sig2 ? sig2w : 0) + (sig3 ? sig3w : 0);
+  var score = operatingScore + ageScore + repairScore + ruleScore + maintScore + perfScore;
+  var effectiveScore = systemOperating ? score : Math.max(score, 4);
 
-    const name = place.displayName || place.formattedAddress;
-    document.getElementById("city-confirm").style.display = "block";
-    document.getElementById("city-confirm-text").textContent = name + " → " + REGION_LABELS[climateRegion] + " region";
-    document.getElementById("climate-helper").textContent = REGION_HELPERS[climateRegion];
-    clearBtn.style.display = "block";
-    liveUpdate();
-  });
+  // DOLLAR CALCULATIONS — zone-adjusted
+  var operatingCost  = systemOperating ? 0 : 900;
+  var effLoss        = age > 8 ? Math.min((age - 8) * zd.effRate, 0.45) : 0;
+  var excessEnergy   = bill * 0.45 * effLoss * sizeMult * unitCount * 12;
+  var repairCost     = repairs * 400 * zd.repairMult * maintFactor * unitCount;
+  var sigBaseCost    = (sig1 ? 180 : 0) + (sig2 ? 240 : 0) + (sig3 ? 360 : 0);
+  var signalCost     = sigBaseCost * zd.sigMult;
+  var totalWaste     = operatingCost + excessEnergy + repairCost + signalCost;
+  var annualSavings  = bill * 0.30 * sizeMult * unitCount * 12 * zd.savingsMult;
+  var rc             = REPLACE_COST[sysType];
 
-  clearBtn.addEventListener("click", function() {
-    placeAutocomplete.value = "";
-    clearBtn.style.display = "none";
-    document.getElementById("city-confirm").style.display = "none";
-    document.getElementById("climate-helper").textContent = "Enter your city and we'll automatically apply the right climate settings for your area.";
-    climateRegion = "hot_humid";
-    liveUpdate();
+  // VERDICT
+  var tipsCard = document.getElementById("tips-card");
+  var secLink  = document.getElementById("secondary-link");
+  var zoneBadge = document.getElementById("zone-badge");
+  var verdictClass, verdictIcon, verdictTitle, verdictDesc, rec, recCls, recSub, ctaH, ctaP, ctaBtnTxt, ctaBtnHref;
+
+  if (effectiveScore >= 7) {
+    verdictClass = "replace"; verdictIcon = "🚨";
+    verdictTitle = "Your System Is Showing Multiple Signs of Wear";
+    verdictDesc  = (systemOperating ? "" : "Your system is running but not conditioning air — you're paying costs without getting comfort. ") +
+      "Based on your inputs and your <strong>" + zd.label + " climate zone</strong>, the most financially sound move at this profile is usually replacement — not because of any single issue, but because the combination of age, repair history, and efficiency loss in your climate means repair costs will keep coming. Here is what that looks like in real numbers.";
+    rec = "Replace"; recCls = "red"; recSub = "financially sound at this profile";
+    ctaH = "Want a Second Opinion Before You Decide?";
+    ctaP = "Flint connects homeowners with honest assessments — no pressure, no upsell. A second opinion before a major purchase is always worth it.";
+    ctaBtnTxt = "Get a Free Second Opinion →"; ctaBtnHref = "https://calendly.com/admin-flinttool/30min";
+    tipsCard.className = "tips-card"; secLink.style.display = "none";
+  } else if (effectiveScore >= 4) {
+    verdictClass = "caution"; verdictIcon = "⚠️";
+    verdictTitle = systemOperating ? "Your System Is Not in Crisis — But Worth Watching" : "Your System Needs Attention";
+    verdictDesc  = (systemOperating ? "" : "A system that isn't conditioning air is an active problem, not a wait-and-see situation. ") +
+      "In a <strong>" + zd.label + " climate zone</strong>, catching issues at this stage is almost always less expensive than waiting for the next season to force your hand. A repair may buy time — the question is whether the cost is worth it given your system's age.";
+    rec = "Evaluate"; recCls = "orange"; recSub = "worth a professional look";
+    ctaH = "Not Sure What the Right Move Is?";
+    ctaP = "A free honest assessment can tell you whether a repair makes financial sense at this stage — or whether you're better off putting that money toward replacement.";
+    ctaBtnTxt = "Get a Free Honest Assessment →"; ctaBtnHref = "https://calendly.com/admin-flinttool/30min";
+    tipsCard.className = "tips-card"; secLink.style.display = "none";
+  } else {
+    verdictClass = "good"; verdictIcon = "✅";
+    verdictTitle = "Good News — Your System Is in Reasonable Shape";
+    verdictDesc  = "Based on what you've told us, your system is in reasonable shape for a <strong>" + zd.label + " climate</strong>. There's no urgent action needed right now. Here's what to keep an eye on to protect that.";
+    rec = "Maintain"; recCls = "green"; recSub = "no urgent action needed";
+    ctaH = "Your System Looks Good — Share These Results";
+    ctaP = "Know someone figuring out whether to repair or replace their HVAC? Send them this tool.";
+    ctaBtnTxt = "Share Your Results"; ctaBtnHref = null;
+    tipsCard.className = "tips-card visible"; secLink.style.display = "block";
+    var tips = getTips(age, maint, currentZone, currentZoneSub);
+    document.getElementById("tips-body").innerHTML = tips.map(function(t) {
+      return '<div class="tip-row"><span class="tip-icon">🔧</span><span class="tip-text">' + t + '</span></div>';
+    }).join("");
+  }
+
+  zoneBadge.style.display = "block";
+  zoneBadge.textContent = "📍 " + currentZoneLabel;
+
+  document.getElementById("verdict-banner").className = "verdict-banner " + verdictClass;
+  sv("verdict-icon", verdictIcon);
+  sv("verdict-title", verdictTitle);
+  document.getElementById("verdict-desc").innerHTML = verdictDesc;
+  sv("out-waste",   fmt(totalWaste));
+  sv("out-rec",     rec);
+  document.getElementById("out-rec").className = "output-value " + recCls;
+  sv("out-rec-sub", recSub);
+  sv("out-save",    fmt(annualSavings));
+  sv("cta-h",       ctaH);
+  sv("cta-p",       ctaP);
+
+  var ctaBtn = document.getElementById("cta-btn");
+  ctaBtn.textContent = ctaBtnTxt;
+  if (ctaBtnHref) {
+    ctaBtn.href = ctaBtnHref; ctaBtn.onclick = null;
+  } else {
+    ctaBtn.href = "#";
+    ctaBtn.onclick = function(e) {
+      e.preventDefault();
+      if (navigator.share) { navigator.share({ title: "My HVAC Assessment — Flint", url: location.href }).catch(copyLink); }
+      else { copyLink(); }
+    };
+  }
+
+  // Breakdown rows
+  var rows = "";
+  if (!systemOperating) rows += brow("❌ System not conditioning air — cost of waiting", fmt(operatingCost) + "/yr", "red", true);
+  rows += brow("Age-related efficiency loss — " + zd.label + " Zone (annual)", fmt(excessEnergy), "red", false);
+  rows += brow("Repair costs — last 2 years, zone-adjusted (est.)", fmt(repairCost), repairs > 1 ? "red" : "", false);
+  if (sig1) rows += brow("⚠️ Signal: Energy bill spiking", fmt(180 * zd.sigMult) + "/yr", "red", true);
+  if (sig2) rows += brow("⚠️ Signal: Uneven heating / cooling", fmt(240 * zd.sigMult) + "/yr", "red", true);
+  if (sig3) rows += brow("⚠️ Signal: Constant running or noises", fmt(360 * zd.sigMult) + "/yr", "red", true);
+  if (repairQ > 0) rows += brow("Current repair quote", fmt(repairQ), "yellow", false);
+  rows += '<div class="b-row total"><span class="b-label">Total estimated annual cost of current situation</span><span class="b-val red">' + fmt(totalWaste + repairQ) + '</span></div>';
+  rows += brow("Est. annual savings with new system — zone-adjusted", fmt(annualSavings) + "/yr", "green", false);
+  rows += brow("Est. replacement cost (" + rc.label + " × " + unitCount + ")", fmt(rc.low * unitCount) + " – " + fmt(rc.high * unitCount), "orange", false);
+  document.getElementById("breakdown-rows").innerHTML = rows;
+
+  // How We Calculate — dynamic zone updates
+  sv("hwc-zone", currentZoneLabel + " — " + zd.label + " climate. Adj. based on IECC 2021 bounding box lookup.");
+  sv("hwc-efficiency", "Zone " + currentZone + ": " + (zd.effRate*100).toFixed(1) + "% efficiency loss/yr after year 8. Replace threshold: " + zd.ageReplace + " yrs. Caution threshold: " + zd.ageCaution + " yrs.");
+  sv("hwc-signals", "Zone " + currentZone + " repair mult: " + zd.repairMult.toFixed(2) + "×. Signal mult: " + zd.sigMult.toFixed(2) + "×. Sig2 (uneven temps) weight: " + sig2w + ". Sig3 (running) weight: " + sig3w + ".");
+
+  // Rule of $5,000
+  var ruleText = repairQ > 0
+    ? "Your system is <strong>" + age + " years old</strong> and your repair quote is <strong>" + fmt(repairQ) + "</strong>. Multiplied: <strong>" + fmt(ruleOf5k) + "</strong>. " + (ruleOf5k > 5000 ? "This exceeds $5,000 — by the industry's own standard, <strong>replacement is typically the more financially sound decision</strong>, especially in a " + zd.label + " climate where the replacement threshold is age " + zd.ageReplace + "." : "This is under $5,000 — a repair may still be reasonable. Weigh it against your system's age and your " + zd.label + " climate conditions.")
+    : "Multiply your system's age by any repair quote you receive. If the result exceeds <strong>$5,000</strong>, replacement is worth seriously considering. In a <strong>" + zd.label + "</strong> climate zone, systems at or past age <strong>" + zd.ageReplace + "</strong> are approaching the end of their cost-effective life.";
+  document.getElementById("rule-text").innerHTML = ruleText;
+
+  document.getElementById("results").classList.add("visible");
+  if (!hasCalculated) {
+    hasCalculated = true;
+    setTimeout(function() { document.getElementById("results").scrollIntoView({behavior:"smooth",block:"start"}); }, 80);
+  }
+}
+
+function copyLink() {
+  navigator.clipboard.writeText(location.href).then(function() {
+    var b = document.getElementById("cta-btn"); var o = b.textContent;
+    b.textContent = "Link Copied ✓"; setTimeout(function() { b.textContent = o; }, 2500);
   });
 }
 
-// Wait for Google Maps to load, then initialize
-window.addEventListener("load", function() {
-  const waitForGoogle = setInterval(function() {
-    if (typeof google !== "undefined" && google.maps && google.maps.importLibrary) {
-      clearInterval(waitForGoogle);
-      initAutocompletAsync();
-    }
-  }, 150);
+function liveUpdate() { if (hasCalculated) calculate(); }
+
+function toggleCalc() {
+  var body = document.getElementById("calc-body");
+  var arrow = document.getElementById("calc-arrow");
+  var open = body.classList.contains("open");
+  body.classList.toggle("open", !open);
+  arrow.textContent = open ? "▼ Show" : "▲ Hide";
+}
+
+function feedbackYes() {
+  console.log("[Flint Feedback] Helpful.");
+  document.getElementById("feedback-btns").style.display = "none";
+  document.getElementById("feedback-question").innerHTML = 'Thanks — glad it helped. <a href="#" onclick="shareResult(event)">Share it with someone who might need it.</a>';
+}
+
+function feedbackNo() {
+  console.log("[Flint Feedback] Not helpful.");
+  document.getElementById("feedback-btns").style.display = "none";
+  document.getElementById("feedback-question").innerHTML = 'What could we do better? <span style="font-size:11px;color:var(--ash)">(optional)</span>';
+  var wrap = document.getElementById("feedback-wrap");
+  var ta = document.createElement("textarea"); ta.className = "feedback-textarea"; ta.placeholder = "Tell us what was missing or confusing...";
+  var btn = document.createElement("button"); btn.className = "feedback-submit"; btn.textContent = "Submit";
+  btn.onclick = function() { console.log("[Flint Feedback]", ta.value.trim() || "(empty)"); wrap.innerHTML = '<div class="feedback-response">Thanks for the feedback — we read every response.</div>'; };
+  wrap.appendChild(ta); wrap.appendChild(btn);
+}
+
+function shareResult(e) { e.preventDefault(); if (navigator.share) { navigator.share({ title: "My HVAC Assessment — Flint", url: location.href }); } else { copyLink(); } }
+
+// ── WIRE UP ALL INPUTS ──
+document.addEventListener("DOMContentLoaded", function() {
+  var ci = document.getElementById("city-input");
+  ci.addEventListener("input", onCityInput);
+  ci.addEventListener("keydown", onCityKeydown);
+  document.getElementById("city-clear").addEventListener("click", clearCity);
+  document.getElementById("age").addEventListener("input", updateAgeDots);
+  document.getElementById("repairs").addEventListener("input", updateRepairHelper);
+  document.getElementById("maintenance").addEventListener("change", updateMaintHelper);
+  ["home-size","system-type","unit-count","energy-bill","repair-quote"].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) { el.addEventListener("input", liveUpdate); el.addEventListener("change", liveUpdate); }
+  });
 });
-
-// Map lat/lng to one of 5 climate regions using bounding boxes
-function coordsToRegion(lat, lng) {
-  // Cold — Northern US (above ~42°N and cold-climate states)
-  if (lat >= 45) return "cold";
-  // Alaska
-  if (lat >= 54) return "cold";
-  // Pacific Northwest / Coastal mild
-  if (lng <= -122 && lat >= 37 && lat <= 49) return "mild";
-  // Coastal California mild
-  if (lng <= -117 && lat >= 32.5 && lat <= 38) return "mild";
-  // Hot & Arid — Southwest interior
-  if (lat >= 31 && lat <= 37 && lng >= -117 && lng <= -104) return "hot_arid";
-  // Nevada interior
-  if (lat >= 36 && lat <= 42 && lng >= -120 && lng <= -114) return "hot_arid";
-  // Hot & Humid — Texas, Gulf Coast, Florida, SE
-  if (lat <= 36 && lng >= -100 && lng <= -80) return "hot_humid";
-  // Florida
-  if (lat <= 31 && lng >= -87 && lng <= -79) return "hot_humid";
-  // Cold northern tier (MN, WI, MI UP, etc.)
-  if (lat >= 42 && lng >= -97 && lng <= -82) return "cold";
-  // Northeast cold
-  if (lat >= 42 && lng >= -80 && lng <= -66) return "cold";
-  // Mid-Atlantic / Mixed
-  if (lat >= 36 && lat <= 42 && lng >= -82 && lng <= -66) return "mixed";
-  // Midwest mixed
-  if (lat >= 36 && lat <= 42 && lng >= -97 && lng <= -82) return "mixed";
-  // Default fallback
-  return "mixed";
-}
-
-function updateClimateFromDropdown() {
-  climateRegion = document.getElementById("climate-region") ? document.getElementById("climate-region").value : "hot_humid";
-  document.getElementById("climate-helper").textContent = REGION_HELPERS[climateRegion];
-  liveUpdate();
-}
-
-function updateSystemHelper()
+</script>
+</body>
+</html>
